@@ -9,8 +9,9 @@ import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
 import { useAtom } from "jotai";
-import { charactersAtom } from "./socket-utils";
-// import { Character } from "./character";
+import { charactersAtom, socket } from "./socket-utils";
+import { OtherCharacter } from "./other-character";
+import { Vector3 } from "three";
 
 type MapName = keyof typeof maps;
 
@@ -40,8 +41,7 @@ const maps = {
 export function Experience() {
   const shadowCameraRef = useRef(null);
   const [characters] = useAtom(charactersAtom);
-
-  console.log({ characters });
+  const myId = socket.id;
 
   const { map } = useControls("Map", {
     map: {
@@ -77,14 +77,16 @@ export function Experience() {
           position={maps[map].position}
           model={`models/${map}.glb`}
         />
-        {/* {characters.map((character) => (
-          <Character
-            key={character.id}
-            position={[character.position.x, character.position.y, character.position.z]}
-            animation={character.animation}
-            scale={1}
-          />
-        ))} */}
+        {characters.map((character) =>
+          character.id !== myId ? (
+            <OtherCharacter
+              position={
+                new Vector3(character.position.x, 3, character.position.z)
+              }
+            />
+          ) : null
+        )}
+
         <CharacterController />
       </Physics>
     </>
