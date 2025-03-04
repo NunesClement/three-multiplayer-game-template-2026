@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.2.3 public/models/character.glb -o src/components/Charact
 
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-import { SkinnedMesh } from "three";
+import { SkinnedMesh, Vector3 } from "three";
 
 type AnimationName = "idle" | "walk" | "run";
 
@@ -13,6 +13,7 @@ interface CharacterProps {
   animation: AnimationName;
   "position-y": number;
   scale: number;
+  position?: Vector3;
 }
 
 export function Character({ animation, ...props }: CharacterProps) {

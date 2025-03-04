@@ -32,7 +32,7 @@ const generateRandomHexColor = (): string => {
 };
 
 io.on("connection", (socket) => {
-  console.log(socket.id, "join the server");
+  console.log(socket.id, "join the server ⬆");
 
   const newCharacter: Character = {
     id: socket.id,
@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log(socket.id, "left the server");
+    console.log(socket.id, "left the server ⬇");
 
     const index = characters.findIndex((char) => char.id === socket.id);
     if (index !== -1) {
