@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Character } from "./socket-utils";
+import { Character, socket } from "./socket-utils";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 
@@ -28,9 +28,11 @@ function Cube({ character }: { character: Character }) {
 export function MovingCubes({ characters }: { characters: Character[] }) {
   return (
     <>
-      {characters.map((character) => (
-        <Cube key={character.id} character={character} />
-      ))}
+      {characters.map((character) =>
+        character.id !== socket.id ? (
+          <Cube key={character.id} character={character} />
+        ) : null
+      )}
     </>
   );
 }

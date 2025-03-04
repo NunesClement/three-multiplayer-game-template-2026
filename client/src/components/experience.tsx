@@ -77,16 +77,7 @@ export function Experience() {
           position={maps[map].position}
           model={`models/${map}.glb`}
         />
-        {/* {characters.map((character) => (
-          <mesh
-            position={
-              new Vector3(character.position.x, 0.15, character.position.z)
-            }
-          >
-            <boxGeometry args={[0.3, 0.3, 0.3]} />
-            <meshStandardMaterial color="red" />
-          </mesh>
-        ))} */}
+
         <MovingCubes characters={characters} />
 
         {/* <Character

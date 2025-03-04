@@ -104,12 +104,12 @@ export function CharacterController() {
           setAnimation("walk");
         }
 
-        // Emit movement to server
-        socket.emit("move", {
-          x: camera.position.x,
-          y: camera.position.y,
-          z: camera.position.z,
-        });
+        // // Emit movement to server
+        // socket.emit("move", {
+        //   x: camera.position.x,
+        //   y: camera.position.y,
+        //   z: camera.position.z,
+        // });
       } else {
         setAnimation("idle");
       }
@@ -120,6 +120,19 @@ export function CharacterController() {
           characterRotationTarget.current,
           0.1
         );
+
+        // Emit movement to server
+        socket.emit("move", {
+          x: character.current?.getWorldPosition(
+            cameraLookAtWorldPosition.current
+          ).x,
+          y: character.current?.getWorldPosition(
+            cameraLookAtWorldPosition.current
+          ).y,
+          z: character.current?.getWorldPosition(
+            cameraLookAtWorldPosition.current
+          ).z,
+        });
       }
 
       rb.current.setLinvel(vel, true);
