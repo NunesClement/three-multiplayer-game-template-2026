@@ -8,10 +8,9 @@ import { useControls } from "leva";
 import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
-import { Character } from "./character";
-import { Vector3 } from "three";
 import { useAtom } from "jotai";
 import { charactersAtom, socket } from "./socket-utils";
+import { MovingCubes } from "./moving-cubes";
 
 type MapName = keyof typeof maps;
 
@@ -41,7 +40,6 @@ const maps = {
 export function Experience() {
   const shadowCameraRef = useRef(null);
   const [characters] = useAtom(charactersAtom);
-  const myId = socket.id;
 
   const { map } = useControls("Map", {
     map: {
@@ -49,6 +47,8 @@ export function Experience() {
       options: Object.keys(maps),
     },
   }) as { map: MapName };
+
+  console.log({ characters, myId: socket.id });
 
   return (
     <>
@@ -77,18 +77,26 @@ export function Experience() {
           position={maps[map].position}
           model={`models/${map}.glb`}
         />
-        {/* {characters.map((character) =>
-          character.id !== myId ? (
-            <Character
+        {/* {characters.map((character) => (
+          <mesh
+            position={
+              new Vector3(character.position.x, 0.15, character.position.z)
+            }
+          >
+            <boxGeometry args={[0.3, 0.3, 0.3]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+        ))} */}
+        <MovingCubes characters={characters} />
+
+        {/* <Character
               position={
                 new Vector3(character.position.x, 3, character.position.z)
               }
               animation={"idle"}
               position-y={-0.25}
               scale={0.18}
-            />
-          ) : null
-        )} */}
+            /> */}
 
         <CharacterController />
       </Physics>

@@ -9,7 +9,6 @@ import { useControls } from "leva";
 import { useRef, useState } from "react";
 import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
-import { Character } from "./character";
 import { socket } from "./socket-utils";
 
 const normalizeAngle = (angle: number) => {
@@ -154,7 +153,11 @@ export function CharacterController() {
         <group ref={cameraTarget} position-z={1.5} />
         <group ref={cameraPosition} position-y={4} position-z={-4} />
         <group ref={character}>
-          <Character scale={0.18} position-y={-0.25} animation={animation} />
+          {/* <Character scale={0.18} position-y={-0.25} animation={animation} /> */}
+          <mesh position-y={0.15}>
+            <boxGeometry args={[0.3, 0.3, 0.3]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
         </group>
       </group>
       <CapsuleCollider args={[0.08, 0.15]} />

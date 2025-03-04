@@ -25,6 +25,17 @@ function App() {
         <color attach="background" args={["#ececec"]} />
         <Experience />
       </Canvas>
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: 3,
+          left: 3,
+          backgroundColor: "white",
+        }}
+      >
+        test
+      </div>
     </KeyboardControls>
   );
 }
