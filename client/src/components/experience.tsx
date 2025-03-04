@@ -79,7 +79,6 @@ export function Experience() {
         />
 
         <MovingCubes characters={characters} />
-
         {/* <Character
               position={
                 new Vector3(character.position.x, 3, character.position.z)
@@ -88,7 +87,6 @@ export function Experience() {
               position-y={-0.25}
               scale={0.18}
             /> */}
-
         <CharacterController />
       </Physics>
     </>

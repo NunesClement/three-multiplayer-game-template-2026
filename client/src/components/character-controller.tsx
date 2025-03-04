@@ -50,7 +50,7 @@ export function CharacterController() {
   const container = useRef<Group>(null);
   const character = useRef<Group>(null);
 
-  const [animation, setAnimation] = useState<"idle" | "walk" | "run">("idle");
+  const [, setAnimation] = useState<"idle" | "walk" | "run">("idle");
 
   const characterRotationTarget = useRef(0);
   const rotationTarget = useRef(0);
