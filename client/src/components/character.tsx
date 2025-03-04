@@ -4,16 +4,32 @@ Command: npx gltfjsx@6.2.3 public/models/character.glb -o src/components/Charact
 */
 
 import { useAnimations, useGLTF } from "@react-three/drei";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { SkinnedMesh } from "three";
 
-export function Character({ animation, ...props }) {
-  const group = useRef();
+type AnimationName = "idle" | "walk" | "run";
+
+interface CharacterProps {
+  animation: AnimationName;
+  "position-y": number;
+  scale: number;
+}
+
+export function Character({ animation, ...props }: CharacterProps) {
+  const group = useRef(null);
   const { nodes, materials, animations } = useGLTF("/models/character.glb");
   const { actions } = useAnimations(animations, group);
+
   useEffect(() => {
-    actions[animation]?.reset().fadeIn(0.24).play();
-    return () => actions?.[animation]?.fadeOut(0.24);
-  }, [animation]);
+    const action = actions[animation];
+    if (action) {
+      action.reset().fadeIn(0.24).play();
+      return () => {
+        action.fadeOut(0.24);
+      };
+    }
+  }, [animation, actions]);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
@@ -21,33 +37,33 @@ export function Character({ animation, ...props }) {
           <primitive object={nodes._rootJoint} />
           <skinnedMesh
             name="body"
-            geometry={nodes.body.geometry}
+            geometry={(nodes.body as SkinnedMesh).geometry}
             material={materials.Material}
-            skeleton={nodes.body.skeleton}
+            skeleton={(nodes.body as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
           <skinnedMesh
             name="eye"
-            geometry={nodes.eye.geometry}
+            geometry={(nodes.body as SkinnedMesh).geometry}
             material={materials.Material}
-            skeleton={nodes.eye.skeleton}
+            skeleton={(nodes.body as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
           <skinnedMesh
             name="hand-"
-            geometry={nodes["hand-"].geometry}
+            geometry={(nodes.body as SkinnedMesh).geometry}
             material={materials.Material}
-            skeleton={nodes["hand-"].skeleton}
+            skeleton={(nodes.body as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
           <skinnedMesh
             name="leg"
-            geometry={nodes.leg.geometry}
+            geometry={(nodes.leg as SkinnedMesh).geometry}
+            skeleton={(nodes.leg as SkinnedMesh).skeleton}
             material={materials.Material}
-            skeleton={nodes.leg.skeleton}
             castShadow
             receiveShadow
           />

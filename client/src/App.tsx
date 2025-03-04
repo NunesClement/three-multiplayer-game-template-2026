@@ -1,6 +1,6 @@
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Experience } from "./components/Experience";
+import { Experience } from "./components/experience";
 
 const keyboardMap = [
   { name: "forward", keys: ["ArrowUp", "KeyW"] },

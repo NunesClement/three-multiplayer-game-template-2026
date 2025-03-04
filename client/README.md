@@ -1,26 +1,54 @@
-# r3f-3rd-person-controller-final
+# React + TypeScript + Vite
 
-![Video thumbnail](http://img.youtube.com/vi/yjpGVIe_Gy8/maxresdefault.jpg?w)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-[Video tutorial](https://youtu.be/yjpGVIe_Gy8)
+Currently, two official plugins are available:
 
-[Starter pack](https://github.com/wass08/r3f-3rd-person-controller-starter)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-[Live demo](https://r3f-3rd-person-controller-final.vercel.app/)
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
-yarn
-yarn dev
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
 ```
-
-## 3D Models Credits
-https://sketchfab.com/3d-models/castle-on-hills-b874cb19b42741729b950f6afbdf0dea
-
-https://sketchfab.com/3d-models/de-dust-2-with-real-light-4ce74cd95c584ce9b12b5ed9dc418db5
-
-https://sketchfab.com/3d-models/animal-crossing-map-9f53cb8a02134037887875e022b2eae2
-
-https://sketchfab.com/3d-models/medieval-fantasy-book-06d5a80a04fc4c5ab552759e9a97d91a
-
-https://sketchfab.com/3d-models/city-scene-tokyo-b25d23ff186949dca3df669c14447db5
-

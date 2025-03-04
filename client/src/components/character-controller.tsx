@@ -1,19 +1,23 @@
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { CapsuleCollider, RigidBody } from "@react-three/rapier";
+import {
+  CapsuleCollider,
+  RigidBody,
+  RapierRigidBody,
+} from "@react-three/rapier";
 import { useControls } from "leva";
 import { useEffect, useRef, useState } from "react";
-import { MathUtils, Vector3 } from "three";
+import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
-import { Character } from "./Character";
+import { Character } from "./character";
 
-const normalizeAngle = (angle) => {
+const normalizeAngle = (angle: number) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
   while (angle < -Math.PI) angle += 2 * Math.PI;
   return angle;
 };
 
-const lerpAngle = (start, end, t) => {
+const lerpAngle = (start: number, end: number, t: number) => {
   start = normalizeAngle(start);
   end = normalizeAngle(end);
 
@@ -28,7 +32,7 @@ const lerpAngle = (start, end, t) => {
   return normalizeAngle(start + (end - start) * t);
 };
 
-export const CharacterController = () => {
+export function CharacterController() {
   const { WALK_SPEED, RUN_SPEED, ROTATION_SPEED } = useControls(
     "Character Control",
     {
@@ -42,16 +46,16 @@ export const CharacterController = () => {
       },
     }
   );
-  const rb = useRef();
-  const container = useRef();
-  const character = useRef();
+  const rb = useRef<RapierRigidBody>(null);
+  const container = useRef<Group>(null);
+  const character = useRef<Group>(null);
 
-  const [animation, setAnimation] = useState("idle");
+  const [animation, setAnimation] = useState<"idle" | "walk" | "run">("idle");
 
   const characterRotationTarget = useRef(0);
   const rotationTarget = useRef(0);
-  const cameraTarget = useRef();
-  const cameraPosition = useRef();
+  const cameraTarget = useRef<Group>(null);
+  const cameraPosition = useRef<Group>(null);
   const cameraWorldPosition = useRef(new Vector3());
   const cameraLookAtWorldPosition = useRef(new Vector3());
   const cameraLookAt = useRef(new Vector3());
@@ -59,10 +63,10 @@ export const CharacterController = () => {
   const isClicking = useRef(false);
 
   useEffect(() => {
-    const onMouseDown = (e) => {
+    const onMouseDown = () => {
       isClicking.current = true;
     };
-    const onMouseUp = (e) => {
+    const onMouseUp = () => {
       isClicking.current = false;
     };
     document.addEventListener("mousedown", onMouseDown);
@@ -134,23 +138,30 @@ export const CharacterController = () => {
       } else {
         setAnimation("idle");
       }
-      character.current.rotation.y = lerpAngle(
-        character.current.rotation.y,
-        characterRotationTarget.current,
-        0.1
-      );
+
+      if (character.current) {
+        character.current.rotation.y = lerpAngle(
+          character.current.rotation.y,
+          characterRotationTarget.current,
+          0.1
+        );
+      }
 
       rb.current.setLinvel(vel, true);
     }
 
     // CAMERA
+    if (!container.current) {
+      return;
+    }
     container.current.rotation.y = MathUtils.lerp(
       container.current.rotation.y,
       rotationTarget.current,
       0.1
     );
 
-    cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
+    if (cameraPosition.current)
+      cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
     camera.position.lerp(cameraWorldPosition.current, 0.1);
 
     if (cameraTarget.current) {
@@ -173,4 +184,4 @@ export const CharacterController = () => {
       <CapsuleCollider args={[0.08, 0.15]} />
     </RigidBody>
   );
-};
+}

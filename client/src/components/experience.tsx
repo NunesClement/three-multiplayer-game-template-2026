@@ -1,9 +1,15 @@
-import { Environment, OrthographicCamera } from "@react-three/drei";
+import {
+  Environment,
+  OrbitControls,
+  OrthographicCamera,
+} from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
 import { useControls } from "leva";
+import { CharacterController } from "./character-controller";
 import { useRef } from "react";
-import { CharacterController } from "./CharacterController";
-import { Map } from "./Map";
+import { Map } from "./map";
+
+type MapName = keyof typeof maps;
 
 const maps = {
   castle_on_hills: {
@@ -26,20 +32,21 @@ const maps = {
     scale: 0.4,
     position: [-4, 0, -6],
   },
-};
+} as const;
 
-export const Experience = () => {
-  const shadowCameraRef = useRef();
+export function Experience() {
+  const shadowCameraRef = useRef(null);
+
   const { map } = useControls("Map", {
     map: {
       value: "castle_on_hills",
       options: Object.keys(maps),
     },
-  });
+  }) as { map: MapName };
 
   return (
     <>
-      {/* <OrbitControls /> */}
+      <OrbitControls />
       <Environment preset="sunset" />
       <directionalLight
         intensity={0.65}
@@ -68,4 +75,4 @@ export const Experience = () => {
       </Physics>
     </>
   );
-};
+}

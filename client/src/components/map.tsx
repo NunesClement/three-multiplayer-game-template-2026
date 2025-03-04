@@ -1,14 +1,23 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 import { useEffect, useRef } from "react";
+import { Mesh } from "three";
 
-export const Map = ({ model, ...props }) => {
+export function Map({
+  model,
+  ...props
+}: {
+  scale: number;
+  position: readonly [number, number, number];
+  model: string;
+}) {
   const { scene, animations } = useGLTF(model);
-  const group = useRef();
+  const group = useRef(null);
   const { actions } = useAnimations(animations, group);
+
   useEffect(() => {
     scene.traverse((child) => {
-      if (child.isMesh) {
+      if ((child as Mesh).isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
       }
@@ -17,8 +26,9 @@ export const Map = ({ model, ...props }) => {
 
   useEffect(() => {
     if (actions && animations.length > 0) {
-      actions[animations[0].name].play();
+      actions[animations[0].name]?.play();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
 
   return (
@@ -28,4 +38,4 @@ export const Map = ({ model, ...props }) => {
       </RigidBody>
     </group>
   );
-};
+}
