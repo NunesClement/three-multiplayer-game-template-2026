@@ -8,10 +8,8 @@ import { useControls } from "leva";
 import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
-import { useAtom } from "jotai";
-import { charactersAtom, socket } from "./socket-utils";
-import { OtherCharacter } from "./other-character";
-import { Vector3 } from "three";
+// import { useAtom } from "jotai";
+// import { charactersAtom, socket } from "./socket-utils";
 
 type MapName = keyof typeof maps;
 
@@ -40,8 +38,8 @@ const maps = {
 
 export function Experience() {
   const shadowCameraRef = useRef(null);
-  const [characters] = useAtom(charactersAtom);
-  const myId = socket.id;
+  // const [characters] = useAtom(charactersAtom);
+  // const myId = socket.id;
 
   const { map } = useControls("Map", {
     map: {
@@ -77,7 +75,7 @@ export function Experience() {
           position={maps[map].position}
           model={`models/${map}.glb`}
         />
-        {characters.map((character) =>
+        {/* {characters.map((character) =>
           character.id !== myId ? (
             <OtherCharacter
               position={
@@ -85,7 +83,7 @@ export function Experience() {
               }
             />
           ) : null
-        )}
+        )} */}
 
         <CharacterController />
       </Physics>

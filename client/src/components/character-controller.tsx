@@ -6,7 +6,7 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 import { useControls } from "leva";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { Character } from "./character";
@@ -61,29 +61,8 @@ export function CharacterController() {
   const cameraLookAtWorldPosition = useRef(new Vector3());
   const cameraLookAt = useRef(new Vector3());
   const [, get] = useKeyboardControls();
-  const isClicking = useRef(false);
 
-  useEffect(() => {
-    const onMouseDown = () => {
-      isClicking.current = true;
-    };
-    const onMouseUp = () => {
-      isClicking.current = false;
-    };
-    document.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mouseup", onMouseUp);
-    // touch
-    document.addEventListener("touchstart", onMouseDown);
-    document.addEventListener("touchend", onMouseUp);
-    return () => {
-      document.removeEventListener("mousedown", onMouseDown);
-      document.removeEventListener("mouseup", onMouseUp);
-      document.removeEventListener("touchstart", onMouseDown);
-      document.removeEventListener("touchend", onMouseUp);
-    };
-  }, []);
-
-  useFrame(({ camera, mouse }) => {
+  useFrame(({ camera }) => {
     if (rb.current) {
       const vel = rb.current.linvel();
 
@@ -99,18 +78,7 @@ export function CharacterController() {
         movement.z = -1;
       }
 
-      let speed = get().run ? RUN_SPEED : WALK_SPEED;
-
-      if (isClicking.current) {
-        console.log("clicking", mouse.x, mouse.y);
-        if (Math.abs(mouse.x) > 0.1) {
-          movement.x = -mouse.x;
-        }
-        movement.z = mouse.y + 0.4;
-        if (Math.abs(movement.x) > 0.5 || Math.abs(movement.z) > 0.5) {
-          speed = RUN_SPEED;
-        }
-      }
+      const speed = get().run ? RUN_SPEED : WALK_SPEED;
 
       if (get().left) {
         movement.x = 1;
