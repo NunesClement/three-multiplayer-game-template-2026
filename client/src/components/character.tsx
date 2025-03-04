@@ -45,17 +45,17 @@ export function Character({ animation, ...props }: CharacterProps) {
           />
           <skinnedMesh
             name="eye"
-            geometry={(nodes.body as SkinnedMesh).geometry}
+            geometry={(nodes.eye as SkinnedMesh).geometry}
             material={materials.Material}
-            skeleton={(nodes.body as SkinnedMesh).skeleton}
+            skeleton={(nodes.eye as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
           <skinnedMesh
             name="hand-"
-            geometry={(nodes.body as SkinnedMesh).geometry}
+            geometry={(nodes["hand-"] as SkinnedMesh).geometry}
             material={materials.Material}
-            skeleton={(nodes.body as SkinnedMesh).skeleton}
+            skeleton={(nodes["hand-"] as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
