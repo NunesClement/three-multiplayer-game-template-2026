@@ -6,11 +6,12 @@ import { Mesh } from "three";
 function Cube({ character }: { character: Character }) {
   const ref = useRef<Mesh>(null);
 
+  console.log({ character });
   useFrame(() => {
     if (ref.current) {
       ref.current.position.set(
         character.position.x,
-        0.15,
+        0.25,
         character.position.z
       );
     }
@@ -25,7 +26,6 @@ function Cube({ character }: { character: Character }) {
 }
 
 export function MovingCubes({ characters }: { characters: Character[] }) {
-  console.log({ characters2: characters });
   return (
     <>
       {characters.map((character) => (

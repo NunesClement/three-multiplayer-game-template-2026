@@ -9,7 +9,7 @@ import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
 import { useAtom } from "jotai";
-import { charactersAtom, socket } from "./socket-utils";
+import { charactersAtom } from "./socket-utils";
 import { MovingCubes } from "./moving-cubes";
 
 type MapName = keyof typeof maps;
@@ -48,7 +48,7 @@ export function Experience() {
     },
   }) as { map: MapName };
 
-  console.log({ characters, myId: socket.id });
+  // console.log({ characters, myId: socket.id });
 
   return (
     <>

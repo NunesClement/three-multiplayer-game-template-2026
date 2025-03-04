@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 
 interface Character {
   id: string;
-  position: [number, number, number];
+  position: { x: number; y: number; z: number };
   // hairColor: string;
   // topColor: string;
   // bottomColor: string;
@@ -18,25 +18,25 @@ io.listen(3001);
 
 const characters: Character[] = [];
 
-const generateRandomPosition = (): [number, number, number] => {
-  return [Math.random() * 3, 0, Math.random() * 3];
-};
+// const generateRandomPosition = (): [number, number, number] => {
+//   return [Math.random() * 3, 0, Math.random() * 3];
+// };
 
-const generateRandomHexColor = (): string => {
-  return (
-    "#" +
-    Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, "0")
-  );
-};
+// const generateRandomHexColor = (): string => {
+//   return (
+//     "#" +
+//     Math.floor(Math.random() * 16777215)
+//       .toString(16)
+//       .padStart(6, "0")
+//   );
+// };
 
 io.on("connection", (socket) => {
   console.log(socket.id, "join the server ⬆");
 
   const newCharacter: Character = {
     id: socket.id,
-    position: generateRandomPosition(),
+    position: { x: 0, y: 0, z: 0 },
     // hairColor: generateRandomHexColor(),
     // topColor: generateRandomHexColor(),
     // bottomColor: generateRandomHexColor(),
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
   socket.emit("hello");
   io.emit("characters", characters);
 
-  socket.on("move", (position: [number, number, number]) => {
+  socket.on("move", (position: { x: number; y: number; z: number }) => {
     const character = characters.find((char) => char.id === socket.id);
     if (character) {
       character.position = position;

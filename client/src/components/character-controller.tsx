@@ -105,11 +105,11 @@ export function CharacterController() {
         }
 
         // Emit movement to server
-        socket.emit("move", [
-          camera.position.x,
-          camera.position.y,
-          camera.position.z,
-        ]);
+        socket.emit("move", {
+          x: camera.position.x,
+          y: camera.position.y,
+          z: camera.position.z,
+        });
       } else {
         setAnimation("idle");
       }
