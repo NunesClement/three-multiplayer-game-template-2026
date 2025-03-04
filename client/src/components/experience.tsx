@@ -76,9 +76,8 @@ export function Experience() {
           position={maps[map].position}
           model={`models/${map}.glb`}
         />
-        {/* {characters.map((character) => (
-          <Character scale={0.18} position-y={-0.25} animation={animation} />
-        ))} */}
+        {characters.map((character) => (
+        ))}
         <CharacterController />
       </Physics>
     </>

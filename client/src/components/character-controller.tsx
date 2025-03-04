@@ -180,6 +180,10 @@ export function CharacterController() {
     }
   });
 
+  console.log({
+    2: character.current?.getWorldPosition(cameraWorldPosition.current),
+  });
+
   return (
     <RigidBody colliders={false} lockRotations ref={rb}>
       <group ref={container}>
