@@ -3,9 +3,9 @@ import { Server } from "socket.io";
 interface Character {
   id: string;
   position: [number, number, number];
-  hairColor: string;
-  topColor: string;
-  bottomColor: string;
+  // hairColor: string;
+  // topColor: string;
+  // bottomColor: string;
 }
 
 const io = new Server({
@@ -37,9 +37,9 @@ io.on("connection", (socket) => {
   const newCharacter: Character = {
     id: socket.id,
     position: generateRandomPosition(),
-    hairColor: generateRandomHexColor(),
-    topColor: generateRandomHexColor(),
-    bottomColor: generateRandomHexColor(),
+    // hairColor: generateRandomHexColor(),
+    // topColor: generateRandomHexColor(),
+    // bottomColor: generateRandomHexColor(),
   };
 
   characters.push(newCharacter);
