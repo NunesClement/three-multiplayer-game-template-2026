@@ -36,10 +36,10 @@ export function CharacterController() {
   const { WALK_SPEED, RUN_SPEED, ROTATION_SPEED } = useControls(
     "Character Control",
     {
-      WALK_SPEED: { value: 0.8, min: 0.1, max: 4, step: 0.1 },
-      RUN_SPEED: { value: 1.6, min: 0.2, max: 12, step: 0.1 },
+      WALK_SPEED: { value: 1.5, min: 0.1, max: 4, step: 0.1 },
+      RUN_SPEED: { value: 2.1, min: 0.2, max: 12, step: 0.1 },
       ROTATION_SPEED: {
-        value: degToRad(0.5),
+        value: degToRad(0.1),
         min: degToRad(0.1),
         max: degToRad(5),
         step: degToRad(0.1),
