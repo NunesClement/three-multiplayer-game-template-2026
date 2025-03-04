@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 export interface Character {
   id: string;
   position: { x: number; y: number; z: number };
-  animation: string;
+  animation: "idle" | "walk" | "run";
 }
 
 // Export the socket instance
