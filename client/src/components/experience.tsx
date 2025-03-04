@@ -8,6 +8,8 @@ import { useControls } from "leva";
 import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
+import { useAtom } from "jotai";
+import { charactersAtom } from "./socket-utils";
 
 type MapName = keyof typeof maps;
 
@@ -36,6 +38,9 @@ const maps = {
 
 export function Experience() {
   const shadowCameraRef = useRef(null);
+  const [characters] = useAtom(charactersAtom);
+
+  console.log({ characters });
 
   const { map } = useControls("Map", {
     map: {
@@ -71,6 +76,9 @@ export function Experience() {
           position={maps[map].position}
           model={`models/${map}.glb`}
         />
+        {/* {characters.map((character) => (
+          <Character scale={0.18} position-y={-0.25} animation={animation} />
+        ))} */}
         <CharacterController />
       </Physics>
     </>

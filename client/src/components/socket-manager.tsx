@@ -1,12 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
-import { charactersAtom, socket } from "./socket-utils";
-
-interface Character {
-  id: string;
-  position: { x: number; y: number; z: number };
-  animation: string;
-}
+import { Character, charactersAtom, socket } from "./socket-utils";
 
 export function SocketManager() {
   const [, setCharacters] = useAtom<Character[]>(charactersAtom);

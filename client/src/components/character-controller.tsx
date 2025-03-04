@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { Character } from "./character";
+import { socket } from "./socket-utils";
 
 const normalizeAngle = (angle: number) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -135,6 +136,13 @@ export function CharacterController() {
         } else {
           setAnimation("walk");
         }
+
+        // Emit movement to server
+        socket.emit("move", [
+          camera.position.x,
+          camera.position.y,
+          camera.position.z,
+        ]);
       } else {
         setAnimation("idle");
       }
