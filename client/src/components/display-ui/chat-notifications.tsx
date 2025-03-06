@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { SendIcon } from "lucide-react";
 import { socket, useSocketStore } from "../socket-utils";
@@ -7,6 +7,7 @@ import { cn } from "../../utils/style-utils";
 export function ChatNotifications() {
   const [currentChat, setCurrentChat] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const { messages } = useSocketStore();
 
@@ -20,6 +21,17 @@ export function ChatNotifications() {
     setCurrentChat("");
   }
 
+  function handleScrollToBottom() {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }
+
+  useEffect(() => {
+    handleScrollToBottom();
+  }, [messages, isFocused]);
+
   return (
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
       <div
@@ -27,6 +39,7 @@ export function ChatNotifications() {
           "bg-opacity-70 backdrop-blur-sm p-2 flex flex-col gap-2 overflow-scroll transition-all duration-300",
           isFocused ? "max-h-[400px] overflow-y-scroll" : "max-h-[120px]"
         )}
+        ref={chatContainerRef}
       >
         {messages.map((msg) => (
           <motion.div
@@ -37,8 +50,12 @@ export function ChatNotifications() {
               msg.type === "left" && "bg-red-600"
             )}
             initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
+            animate={
+              isFocused
+                ? { opacity: 1, visibility: "visible" }
+                : { opacity: 0, visibility: "hidden" }
+            }
+            exit={{ opacity: 0, visibility: "hidden" }}
             transition={{ duration: 1, delay: 9 }} // Message will fade after 9 seconds
           >
             {msg.id} {msg.text}
