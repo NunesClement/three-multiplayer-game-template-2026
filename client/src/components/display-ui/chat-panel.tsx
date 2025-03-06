@@ -105,6 +105,7 @@ export function ChatPanel() {
               character.position.y
             )} z: ${Math.round(character.position.z)}`}</p>
             <p>{character.animation}</p>
+            <p>{character.rotation}</p>
           </div>
         ))}
       </div>

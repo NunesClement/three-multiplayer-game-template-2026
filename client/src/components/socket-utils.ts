@@ -1,18 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { create } from "zustand";
-
-export interface Character {
-  id: string;
-  position: { x: number; y: number; z: number };
-  animation: "idle" | "walk" | "run";
-}
-
-export interface Chat {
-  id: string;
-  text: string;
-  type: "message" | "join" | "left";
-  postedAt: string;
-}
+import { Character, Chat } from "../../../common-interfaces";
 
 export interface SocketStoreType {
   characters: Character[];

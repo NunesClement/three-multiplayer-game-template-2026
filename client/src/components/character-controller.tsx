@@ -147,6 +147,10 @@ export function CharacterController() {
       0.1
     );
 
+    socket.emit("rotation", {
+      rotation: container.current.rotation.y,
+    });
+
     if (cameraPosition.current)
       cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
     camera.position.lerp(cameraWorldPosition.current, 0.1);

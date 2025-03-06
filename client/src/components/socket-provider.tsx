@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Character, Chat, useSocketStore } from "./socket-utils";
+import { useSocketStore } from "./socket-utils";
+import { Character, Chat } from "../../../common-interfaces";
 
 export function SocketManager() {
   const { setCharacters, addChat, socket } = useSocketStore();

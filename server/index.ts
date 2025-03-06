@@ -1,19 +1,5 @@
 import { Server } from "socket.io";
-
-type AnimationName = "idle" | "walk" | "run";
-
-interface Character {
-  id: string;
-  position: { x: number; y: number; z: number };
-  animation: AnimationName;
-}
-
-interface Chat {
-  id: string;
-  text: string;
-  type: "message" | "join" | "left";
-  postedAt: string;
-}
+import { AnimationType, Character, Chat } from "../common-interfaces";
 
 const io = new Server({
   cors: {
@@ -48,6 +34,7 @@ io.on("connection", (socket) => {
     id: socket.id,
     position: { x: 0, y: 0, z: 0 },
     animation: "idle",
+    rotation: 0,
   };
 
   characters.push(newCharacter);
@@ -63,7 +50,16 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("animation", ({ animation }: { animation: AnimationName }) => {
+  socket.on("rotation", ({ rotation }: { rotation: number }) => {
+    const character = characters.find((char) => char.id === socket.id);
+    if (character) {
+      character.rotation = rotation;
+      io.emit("characters", characters);
+    }
+    console.log({ rotation });
+  });
+
+  socket.on("animation", ({ animation }: { animation: AnimationType }) => {
     const character = characters.find((char) => char.id === socket.id);
     if (character) {
       character.animation = animation;

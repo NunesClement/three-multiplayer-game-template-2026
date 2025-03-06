@@ -1,6 +1,7 @@
 import { Character as Character3D } from "./character";
-import { Character, useSocketStore } from "./socket-utils";
+import { useSocketStore } from "./socket-utils";
 import { Vector3 } from "three";
+import { Character } from "../../../common-interfaces";
 
 function Cube({ character }: { character: Character }) {
   return (
