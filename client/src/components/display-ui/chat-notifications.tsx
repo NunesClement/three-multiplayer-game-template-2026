@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { SendIcon } from "lucide-react";
 
 export function ChatNotifications() {
   const [messages, setMessages] = useState([
@@ -33,6 +34,19 @@ export function ChatNotifications() {
           </motion.div>
         ))}
       </AnimatePresence>
+      <div className="flex gap-2 items-center opacity-35 hover:opacity-100">
+        <input
+          placeholder="Chat..."
+          className="border-black border-2 p-1 rounded-lg"
+        />
+        <motion.button
+          className="flex gap-2 bg-gray-50/10 p-1 rounded-lg"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Send <SendIcon />
+        </motion.button>
+      </div>
     </div>
   );
 }
