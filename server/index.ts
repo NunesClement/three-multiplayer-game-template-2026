@@ -1,8 +1,11 @@
 import { Server } from "socket.io";
 
+type AnimationName = "idle" | "walk" | "run";
+
 interface Character {
   id: string;
   position: { x: number; y: number; z: number };
+  animation: AnimationName;
 }
 
 interface Chat {
@@ -44,6 +47,7 @@ io.on("connection", (socket) => {
   const newCharacter: Character = {
     id: socket.id,
     position: { x: 0, y: 0, z: 0 },
+    animation: "idle",
   };
 
   characters.push(newCharacter);
@@ -55,6 +59,14 @@ io.on("connection", (socket) => {
     const character = characters.find((char) => char.id === socket.id);
     if (character) {
       character.position = position;
+      io.emit("characters", characters);
+    }
+  });
+
+  socket.on("animation", ({ animation }: { animation: AnimationName }) => {
+    const character = characters.find((char) => char.id === socket.id);
+    if (character) {
+      character.animation = animation;
       io.emit("characters", characters);
     }
   });

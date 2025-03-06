@@ -103,11 +103,14 @@ export function CharacterController() {
           speed;
         if (speed === RUN_SPEED) {
           setAnimation("run");
+          socket.emit("animation", { animation: "run" });
         } else {
           setAnimation("walk");
+          socket.emit("animation", { animation: "walk" });
         }
       } else {
         setAnimation("idle");
+        socket.emit("animation", { animation: "idle" });
       }
 
       if (character.current) {
