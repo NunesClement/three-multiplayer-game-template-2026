@@ -6,6 +6,8 @@ import { cn } from "../../utils/style-utils";
 
 export function ChatNotifications() {
   const [currentChat, setCurrentChat] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+
   const { messages } = useSocketStore();
 
   console.log(messages);
@@ -20,24 +22,39 @@ export function ChatNotifications() {
 
   return (
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
-      {messages.map((msg) => (
-        <div
-          key={msg.id}
-          className={cn(
-            `p-2 rounded-lg text-white text-sm bg-opacity-70 backdrop-blur-sm`,
-            msg.type === "join" && "bg-green-600",
-            msg.type === "left" && "bg-red-600"
-          )}
-        >
-          {msg.text}
-        </div>
-      ))}
+      <div
+        className={cn(
+          "bg-opacity-70 backdrop-blur-sm p-2 flex flex-col gap-2 overflow-scroll transition-all duration-300",
+          isFocused ? "max-h-[400px] overflow-y-scroll" : "max-h-[120px]"
+        )}
+      >
+        {messages.map((msg) => (
+          <motion.div
+            key={msg.id}
+            className={cn(
+              `rounded-lg text-white text-sm `,
+              msg.type === "join" && "bg-green-600",
+              msg.type === "left" && "bg-red-600"
+            )}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, delay: 9 }} // Message will fade after 9 seconds
+          >
+            {msg.id} {msg.text}
+          </motion.div>
+        ))}
+      </div>
       <div className="flex gap-2 items-center opacity-35 hover:opacity-100">
         <input
           placeholder="Chat..."
           className="border-black border-2 p-1 rounded-lg"
-          onKeyDown={(e) => e.stopPropagation()}
+          onKeyDown={(e) =>
+            e.key === "Enter" ? handlePostMessage() : e.stopPropagation()
+          }
           onChange={(e) => setCurrentChat(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           value={currentChat}
         />
         <motion.button
