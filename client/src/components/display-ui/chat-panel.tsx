@@ -9,7 +9,7 @@ export function ChatPanel() {
   const [isFocused, setIsFocused] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const { chats, socket } = useSocketStore();
+  const { chats, socket, characters } = useSocketStore();
 
   function handlePostMessage() {
     socket.emit("chat", {
@@ -75,7 +75,7 @@ export function ChatPanel() {
           </motion.div>
         ))}
       </div>
-      <div className="flex gap-2 items-center opacity-35 hover:opacity-100">
+      <div className="gap-2 items-center opacity-35 hover:opacity-100 hidden lg:flex">
         <input
           placeholder="Chat..."
           className="border-black border-2 p-1 rounded-lg w-full"
@@ -97,6 +97,16 @@ export function ChatPanel() {
         </motion.button>
       </div>
       <div>debug: {socket.id}</div>
+      <div className="text-xs">
+        position:{" "}
+        <div>
+          {characters.map((character) => (
+            <p>{`x: ${Math.round(character.position.x)} y: ${Math.round(
+              character.position.y
+            )} z: ${Math.round(character.position.z)}`}</p>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

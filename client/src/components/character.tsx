@@ -1,6 +1,6 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-import { SkinnedMesh, Vector3 } from "three";
+import { SkinnedMesh } from "three";
 
 type AnimationName = "idle" | "walk" | "run";
 
@@ -8,8 +8,7 @@ interface CharacterProps {
   animation: AnimationName;
   "position-y": number;
   scale: number;
-  position?: Vector3;
-  playerId: string; // Added playerId prop
+  playerId: string; // Unique identifier for each player
 }
 
 export function Character({ animation, playerId, ...props }: CharacterProps) {
@@ -17,6 +16,7 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
   const { nodes, materials, animations } = useGLTF("/models/character.glb");
   const { actions } = useAnimations(animations, group);
 
+  // Play the specified animation for this player's character
   useEffect(() => {
     const action = actions[animation];
     if (action) {
@@ -28,12 +28,17 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
   }, [animation, actions]);
 
   return (
-    <group ref={group} {...props} dispose={null} name={`main-${playerId}`}>
-      <group name={`Scene-${playerId}`}>
-        <group name={`fall_guys-${playerId}`}>
-          <primitive object={nodes._rootJoint} name={`test4-${playerId}`} />
+    <group
+      ref={group}
+      {...props}
+      dispose={null}
+      name={`character-root-${playerId}`} // Unique root group name
+    >
+      <group name={`scene-${playerId}`}>
+        <group name={`character-model-${playerId}`}>
+          <primitive object={nodes._rootJoint} />
           <skinnedMesh
-            name={`body-${playerId}`} // Unique name for each player
+            name={`body-${playerId}`}
             geometry={(nodes.body as SkinnedMesh).geometry}
             material={materials.Material}
             skeleton={(nodes.body as SkinnedMesh).skeleton}
@@ -41,7 +46,7 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
             receiveShadow
           />
           <skinnedMesh
-            name={`eye-${playerId}`} // Unique name for each player
+            name={`eye-${playerId}`}
             geometry={(nodes.eye as SkinnedMesh).geometry}
             material={materials.Material}
             skeleton={(nodes.eye as SkinnedMesh).skeleton}
@@ -49,18 +54,18 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
             receiveShadow
           />
           <skinnedMesh
-            name={`hand-${playerId}`} // Unique name for each player
-            geometry={(nodes[`hand-`] as SkinnedMesh).geometry}
+            name={`hand-${playerId}`}
+            geometry={(nodes["hand-"] as SkinnedMesh).geometry} // Consistent key
             material={materials.Material}
-            skeleton={(nodes[`hand-`] as SkinnedMesh).skeleton}
+            skeleton={(nodes["hand-"] as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
           <skinnedMesh
-            name={`leg-${playerId}`} // Unique name for each player
+            name={`leg-${playerId}`}
             geometry={(nodes.leg as SkinnedMesh).geometry}
-            skeleton={(nodes.leg as SkinnedMesh).skeleton}
             material={materials.Material}
+            skeleton={(nodes.leg as SkinnedMesh).skeleton}
             castShadow
             receiveShadow
           />
