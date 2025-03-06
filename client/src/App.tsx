@@ -2,7 +2,7 @@ import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/experience";
 import { SocketProvider } from "./components/socket-provider";
-import { TestDisplayUIPlayer } from "./components/display-ui/test-display-player";
+import { ChatNotifications } from "./components/display-ui/chat-notifications";
 
 const keyboardMap = [
   { name: "forward", keys: ["ArrowUp", "KeyW"] },
@@ -27,7 +27,7 @@ function App() {
           <Experience />
         </Canvas>
 
-        <TestDisplayUIPlayer />
+        <ChatNotifications />
       </SocketProvider>
     </KeyboardControls>
   );
