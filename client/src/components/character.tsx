@@ -34,7 +34,6 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
     const action = actions[animation];
     if (action) {
       // Stop any currently playing animations
-      mixer.stopAllAction();
 
       action.reset().fadeIn(0.24).play();
       return () => {
