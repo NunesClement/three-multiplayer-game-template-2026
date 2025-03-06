@@ -27,6 +27,14 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
     }
   }, [animation, actions]);
 
+  // return (
+  //   <group>
+  //     <mesh>
+  //       <boxGeometry args={[0.5, 0.5, 0.5]} />
+  //       <meshStandardMaterial color="red" />
+  //     </mesh>
+  //   </group>
+  // );
   return (
     <group
       ref={group}
@@ -36,9 +44,15 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
     >
       <group name={`scene-${playerId}`}>
         <group name={`character-model-${playerId}`}>
+          {/* <mesh>
+            <boxGeometry args={[0.5, 0.5, 0.5]} />
+            <meshStandardMaterial color="red" />
+          </mesh> */}
           <primitive object={nodes._rootJoint} />
+
           <skinnedMesh
             name={`body-${playerId}`}
+            key={`body-${playerId}`}
             geometry={(nodes.body as SkinnedMesh).geometry}
             material={materials.Material}
             skeleton={(nodes.body as SkinnedMesh).skeleton}
@@ -47,6 +61,7 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
           />
           <skinnedMesh
             name={`eye-${playerId}`}
+            key={`eye-${playerId}`}
             geometry={(nodes.eye as SkinnedMesh).geometry}
             material={materials.Material}
             skeleton={(nodes.eye as SkinnedMesh).skeleton}
@@ -55,6 +70,7 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
           />
           <skinnedMesh
             name={`hand-${playerId}`}
+            key={`hand-${playerId}`}
             geometry={(nodes["hand-"] as SkinnedMesh).geometry} // Consistent key
             material={materials.Material}
             skeleton={(nodes["hand-"] as SkinnedMesh).skeleton}
@@ -63,6 +79,7 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
           />
           <skinnedMesh
             name={`leg-${playerId}`}
+            key={`leg-${playerId}`}
             geometry={(nodes.leg as SkinnedMesh).geometry}
             material={materials.Material}
             skeleton={(nodes.leg as SkinnedMesh).skeleton}
