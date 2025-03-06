@@ -42,7 +42,7 @@ export function ChatPanel() {
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
       <div
         className={cn(
-          "bg-opacity-70 backdrop-blur-sm flex flex-col gap-2 overflow-scroll transition-all duration-300",
+          "bg-opacity-70 backdrop-blur-sm flex flex-col gap-2 overflow-scroll transition-all duration-300 break-words",
           isFocused ? "max-h-[400px] overflow-y-scroll" : "max-h-[120px]"
         )}
         ref={chatContainerRef}
@@ -78,7 +78,7 @@ export function ChatPanel() {
       <div className="flex gap-2 items-center opacity-35 hover:opacity-100">
         <input
           placeholder="Chat..."
-          className="border-black border-2 p-1 rounded-lg"
+          className="border-black border-2 p-1 rounded-lg w-full"
           onKeyDown={(e) =>
             e.key === "Enter" ? handlePostMessage() : e.stopPropagation()
           }
@@ -88,12 +88,12 @@ export function ChatPanel() {
           value={currentChat}
         />
         <motion.button
-          className="flex gap-2 bg-gray-50/10 p-1 rounded-lg"
+          className="bg-gray-50/10 p-1 rounded-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handlePostMessage}
         >
-          Send <SendIcon />
+          <SendIcon />
         </motion.button>
       </div>
     </div>
