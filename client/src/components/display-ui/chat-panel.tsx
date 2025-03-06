@@ -4,7 +4,7 @@ import { SendIcon } from "lucide-react";
 import { socket, useSocketStore } from "../socket-utils";
 import { cn } from "../../utils/style-utils";
 
-export function ChatNotifications() {
+export function ChatPanel() {
   const [currentChat, setCurrentChat] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);

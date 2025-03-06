@@ -1,7 +1,7 @@
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/experience";
-import { ChatNotifications } from "./components/display-ui/chat-notifications";
+import { ChatPanel } from "./components/display-ui/chat-panel";
 import { SocketManager } from "./components/socket-provider";
 
 const keyboardMap = [
@@ -27,7 +27,7 @@ function App() {
         <Experience />
       </Canvas>
 
-      <ChatNotifications />
+      <ChatPanel />
     </KeyboardControls>
   );
 }
