@@ -10,6 +10,7 @@ import { useRef, useState } from "react";
 import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { socket } from "./socket-utils";
+import { Character } from "./character";
 
 const normalizeAngle = (angle: number) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -50,7 +51,7 @@ export function CharacterController() {
   const container = useRef<Group>(null);
   const character = useRef<Group>(null);
 
-  const [, setAnimation] = useState<"idle" | "walk" | "run">("idle");
+  const [animation, setAnimation] = useState<"idle" | "walk" | "run">("idle");
 
   const characterRotationTarget = useRef(0);
   const rotationTarget = useRef(0);
@@ -161,8 +162,7 @@ export function CharacterController() {
         <group ref={character}>
           {/* <Character scale={0.18} position-y={-0.25} animation={animation} /> */}
           <mesh position-y={0.15}>
-            <boxGeometry args={[0.3, 0.3, 0.3]} />
-            <meshStandardMaterial color="red" />
+            <Character scale={0.18} position-y={-0.25} animation={animation} />
           </mesh>
         </group>
       </group>
