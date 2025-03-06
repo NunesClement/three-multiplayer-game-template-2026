@@ -8,8 +8,6 @@ import { useControls } from "leva";
 import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
-import { useAtom } from "jotai";
-import { charactersAtom } from "./socket-utils";
 import { MovingCubes } from "./moving-cubes";
 
 type MapName = keyof typeof maps;
@@ -39,7 +37,6 @@ const maps = {
 
 export function Experience() {
   const shadowCameraRef = useRef(null);
-  const [characters] = useAtom(charactersAtom);
 
   const { map } = useControls("Map", {
     map: {
@@ -76,7 +73,7 @@ export function Experience() {
           model={`models/${map}.glb`}
         />
 
-        <MovingCubes characters={characters} />
+        <MovingCubes />
 
         <CharacterController />
       </Physics>

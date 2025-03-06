@@ -1,6 +1,5 @@
-import { atom } from "jotai";
-import { createContext, useContext } from "react";
 import { io } from "socket.io-client";
+import { create } from "zustand";
 
 export interface Character {
   id: string;
@@ -16,17 +15,18 @@ export interface Chat {
 
 // Export the socket instance
 export const socket = io("http://localhost:3001");
-export const charactersAtom = atom<Character[]>([]);
-export const chatAtom = atom<Chat[]>([]);
 
-export interface SocketContextType {
+export interface SocketStoreType {
   characters: Character[];
+  setCharacters: (characters: Character[]) => void;
   messages: Chat[];
+  addMessage: (chat: Chat) => void;
 }
 
-export const SocketContext = createContext<SocketContextType>({
+export const useSocketStore = create<SocketStoreType>()((set) => ({
   characters: [],
+  setCharacters: (characters) => set({ characters }),
   messages: [],
-});
-
-export const useSocket = () => useContext(SocketContext);
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] })),
+}));

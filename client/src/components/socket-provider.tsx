@@ -1,9 +1,8 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { Character, Chat, socket, SocketContext } from "./socket-utils";
+import { useEffect } from "react";
+import { Character, Chat, socket, useSocketStore } from "./socket-utils";
 
-export function SocketProvider({ children }: PropsWithChildren) {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [messages, setMessages] = useState<Chat[]>([]);
+export function SocketManager() {
+  const { setCharacters, addMessage } = useSocketStore();
 
   useEffect(() => {
     function onConnect() {
@@ -23,7 +22,7 @@ export function SocketProvider({ children }: PropsWithChildren) {
 
     function onChat(value: Chat) {
       console.log({ value });
-      setMessages((prev) => [...prev, value]);
+      addMessage(value);
     }
 
     socket.on("connect", onConnect);
@@ -39,11 +38,7 @@ export function SocketProvider({ children }: PropsWithChildren) {
       socket.off("characters", onCharacters);
       socket.off("chat", onChat);
     };
-  }, []);
+  }, [addMessage, setCharacters]);
 
-  return (
-    <SocketContext.Provider value={{ characters, messages }}>
-      {children}
-    </SocketContext.Provider>
-  );
+  return null;
 }

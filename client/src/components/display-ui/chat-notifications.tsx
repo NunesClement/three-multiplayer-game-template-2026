@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { SendIcon } from "lucide-react";
-import { chatAtom, socket } from "../socket-utils";
-import { useAtom } from "jotai";
+import { socket, useSocketStore } from "../socket-utils";
 import { cn } from "../../utils/style-utils";
 
 export function ChatNotifications() {
   const [currentChat, setCurrentChat] = useState("");
-  const [messages] = useAtom(chatAtom);
+  const { messages } = useSocketStore();
 
   console.log(messages);
 

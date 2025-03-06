@@ -1,9 +1,8 @@
-import { Character, socket } from "./socket-utils";
+import { Character, socket, useSocketStore } from "./socket-utils";
 import { Vector3 } from "three";
 
 function Cube({ character }: { character: Character }) {
   //   const ref = useRef<Mesh>(null);
-
   //   console.log({ character });
   //   useFrame(() => {
   //     if (ref.current) {
@@ -25,7 +24,9 @@ function Cube({ character }: { character: Character }) {
   );
 }
 
-export function MovingCubes({ characters }: { characters: Character[] }) {
+export const MovingCubes = () => {
+  const { characters } = useSocketStore();
+
   return (
     <>
       {characters.map((character) =>
@@ -35,4 +36,4 @@ export function MovingCubes({ characters }: { characters: Character[] }) {
       )}
     </>
   );
-}
+};
