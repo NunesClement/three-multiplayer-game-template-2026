@@ -17,7 +17,6 @@ export function SocketManager() {
     }
 
     function onCharacters(value: Character[]) {
-      console.log({ value });
       setCharacters(value);
     }
 
@@ -28,7 +27,7 @@ export function SocketManager() {
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("hello", onHello);
-    socket.off("characters", onCharacters);
+    socket.on("characters", onCharacters);
     socket.on("chat", onChat);
 
     return () => {
