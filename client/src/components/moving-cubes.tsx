@@ -6,7 +6,6 @@ import { Character } from "../../../common-interfaces";
 function Cube({ character }: { character: Character }) {
   return (
     <mesh
-      position-y={0.15}
       position={
         new Vector3(
           character.position.x,
