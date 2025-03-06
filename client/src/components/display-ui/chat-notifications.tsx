@@ -55,7 +55,10 @@ export function ChatNotifications() {
                 ? { opacity: 1, display: "block" }
                 : { opacity: 0, display: "none" }
             }
-            transition={{ duration: 1, delay: 3 }} // Message will fade after 9 seconds
+            transition={{
+              duration: 1,
+              delay: isFocused ? 0 : 9,
+            }}
           >
             {msg.id} {msg.text}
           </motion.div>
