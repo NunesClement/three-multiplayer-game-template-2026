@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { AnimationType, Character, Chat } from "../common-interfaces";
+import { AnimationCharacterType, Character, Chat } from "../common-interfaces";
 
 const io = new Server({
   cors: {
@@ -59,13 +59,16 @@ io.on("connection", (socket) => {
     console.log({ rotation });
   });
 
-  socket.on("animation", ({ animation }: { animation: AnimationType }) => {
-    const character = characters.find((char) => char.id === socket.id);
-    if (character) {
-      character.animation = animation;
-      io.emit("characters", characters);
+  socket.on(
+    "animation",
+    ({ animation }: { animation: AnimationCharacterType }) => {
+      const character = characters.find((char) => char.id === socket.id);
+      if (character) {
+        character.animation = animation;
+        io.emit("characters", characters);
+      }
     }
-  });
+  );
 
   socket.on("chat", (chat: { message: Chat["text"] }) => {
     io.emit("chat", {

@@ -11,6 +11,7 @@ import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { Character } from "./character";
 import { useSocketStore } from "./socket-utils";
+import { AnimationCharacterType } from "../../../common-interfaces";
 
 const normalizeAngle = (angle: number) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -34,7 +35,7 @@ const lerpAngle = (start: number, end: number, t: number) => {
 };
 
 export function CharacterController() {
-  const { WALK_SPEED, RUN_SPEED, ROTATION_SPEED } = useControls(
+  const { WALK_SPEED, RUN_SPEED, ROTATION_SPEED, JUMP_FORCE } = useControls(
     "Character Control",
     {
       WALK_SPEED: { value: 1.5, min: 0.1, max: 4, step: 0.1 },
@@ -45,13 +46,15 @@ export function CharacterController() {
         max: degToRad(5),
         step: degToRad(0.1),
       },
+      JUMP_FORCE: { value: 1.5, min: 0.1, max: 4, step: 0.1 },
     }
   );
   const rb = useRef<RapierRigidBody>(null);
+  const [isGrounded, setIsGrounded] = useState(true); // Added grounded state
   const container = useRef<Group>(null);
   const character = useRef<Group>(null);
 
-  const [animation, setAnimation] = useState<"idle" | "walk" | "run">("idle");
+  const [animation, setAnimation] = useState<AnimationCharacterType>("idle");
 
   const characterRotationTarget = useRef(0);
   const rotationTarget = useRef(0);
@@ -78,6 +81,13 @@ export function CharacterController() {
       }
       if (get().backward) {
         movement.z = -1;
+      }
+
+      if (get().jump && isGrounded) {
+        vel.y = JUMP_FORCE;
+        setIsGrounded(false);
+        setAnimation("jump"); // Assuming you have a jump animation
+        socket.emit("animation", { animation: "jump" });
       }
 
       const speed = get().run ? RUN_SPEED : WALK_SPEED;
@@ -111,6 +121,10 @@ export function CharacterController() {
       } else {
         setAnimation("idle");
         socket.emit("animation", { animation: "idle" });
+      }
+
+      if (vel.y === 0 && !isGrounded) {
+        setIsGrounded(true);
       }
 
       if (character.current) {
@@ -164,7 +178,12 @@ export function CharacterController() {
   });
 
   return (
-    <RigidBody colliders={false} lockRotations ref={rb}>
+    <RigidBody
+      colliders={false}
+      lockRotations
+      ref={rb}
+      onCollisionEnter={() => setIsGrounded(true)} // More accurate ground detection
+    >
       <group ref={container}>
         <group ref={cameraTarget} position-z={1.5} />
         <group ref={cameraPosition} position-y={4} position-z={-4} />

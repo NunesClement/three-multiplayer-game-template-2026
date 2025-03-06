@@ -2,11 +2,10 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import { Object3D } from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
-
-type AnimationName = "idle" | "walk" | "run";
+import { AnimationCharacterType } from "../../../common-interfaces";
 
 interface CharacterProps {
-  animation: AnimationName;
+  animation: AnimationCharacterType;
   "position-y": number;
   scale: number;
   playerId: string; // Unique identifier for each player

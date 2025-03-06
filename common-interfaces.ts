@@ -1,9 +1,9 @@
-export type AnimationType = "idle" | "walk" | "run";
+export type AnimationCharacterType = "idle" | "walk" | "run" | "jump";
 
 export interface Character {
   id: string;
   position: { x: number; y: number; z: number };
-  animation: AnimationType;
+  animation: AnimationCharacterType;
   rotation: number;
 }
 
