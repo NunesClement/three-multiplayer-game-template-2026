@@ -12,7 +12,7 @@ function Cube({ character }: { character: Character }) {
       <Character3D
         scale={0.18}
         position-y={-0.25}
-        animation="idle"
+        animation={character.animation}
         playerId={character.id || "myself"}
       />
     </mesh>

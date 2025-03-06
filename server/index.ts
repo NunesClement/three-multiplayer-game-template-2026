@@ -65,6 +65,7 @@ io.on("connection", (socket) => {
 
   socket.on("animation", ({ animation }: { animation: AnimationName }) => {
     const character = characters.find((char) => char.id === socket.id);
+    console.log({ animation });
     if (character) {
       character.animation = animation;
       io.emit("characters", characters);
