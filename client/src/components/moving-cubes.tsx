@@ -1,3 +1,4 @@
+import { Character as Character3D } from "./character";
 import { Character, socket, useSocketStore } from "./socket-utils";
 import { Vector3 } from "three";
 
@@ -15,11 +16,18 @@ function Cube({ character }: { character: Character }) {
   //   });
 
   return (
-    <mesh
-      position={new Vector3(character.position.x, 0.25, character.position.z)}
-    >
-      <boxGeometry args={[0.3, 0.3, 0.3]} />
-      <meshStandardMaterial color="red" />
+    <mesh>
+      <mesh
+        position-y={0.15}
+        position={new Vector3(character.position.x, 0.25, character.position.z)}
+      >
+        <Character3D
+          scale={0.18}
+          position-y={-0.25}
+          animation="idle"
+          playerId={character.id || "myself"}
+        />
+      </mesh>
     </mesh>
   );
 }
