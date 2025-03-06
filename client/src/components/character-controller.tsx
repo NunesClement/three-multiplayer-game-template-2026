@@ -86,8 +86,6 @@ export function CharacterController() {
       if (get().jump && isGrounded) {
         vel.y = JUMP_FORCE;
         setIsGrounded(false);
-        setAnimation("jump"); // Assuming you have a jump animation
-        socket.emit("animation", { animation: "jump" });
       }
 
       const speed = get().run ? RUN_SPEED : WALK_SPEED;

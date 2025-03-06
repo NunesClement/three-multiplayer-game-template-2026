@@ -1,4 +1,4 @@
-export type AnimationCharacterType = "idle" | "walk" | "run" | "jump";
+export type AnimationCharacterType = "idle" | "walk" | "run";
 
 export interface Character {
   id: string;
