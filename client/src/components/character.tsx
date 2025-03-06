@@ -1,6 +1,7 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { useEffect, useRef } from "react";
-import { SkinnedMesh } from "three";
+import { useEffect, useRef, useState } from "react";
+import { Object3D } from "three";
+import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 
 type AnimationName = "idle" | "walk" | "run";
 
@@ -12,84 +13,51 @@ interface CharacterProps {
 }
 
 export function Character({ animation, playerId, ...props }: CharacterProps) {
-  const group = useRef(null);
-  const { nodes, materials, animations } = useGLTF("/models/character.glb");
-  const { actions } = useAnimations(animations, group);
+  const group = useRef<Object3D>(null);
+  const [model, setModel] = useState<Object3D | null>(null);
+  const { scene, animations } = useGLTF("/models/character.glb");
+  const { actions, mixer } = useAnimations(animations, group);
+
+  // Clone the model once on component mount
+  useEffect(() => {
+    if (scene && !model) {
+      // Use SkeletonUtils.clone for proper skinned mesh cloning
+      const clonedScene = clone(scene);
+      setModel(clonedScene);
+    }
+  }, [scene, model]);
 
   // Play the specified animation for this player's character
   useEffect(() => {
+    if (!actions || !mixer) return;
+
     const action = actions[animation];
     if (action) {
+      // Stop any currently playing animations
+      mixer.stopAllAction();
+
       action.reset().fadeIn(0.24).play();
       return () => {
         action.fadeOut(0.24);
       };
     }
-  }, [animation, actions]);
+  }, [animation, actions, mixer]);
 
-  // return (
-  //   <group>
-  //     <mesh>
-  //       <boxGeometry args={[0.5, 0.5, 0.5]} />
-  //       <meshStandardMaterial color="red" />
-  //     </mesh>
-  //   </group>
-  // );
+  // Only render when model is ready
+  if (!model) return null;
+
   return (
     <group
       ref={group}
       {...props}
       dispose={null}
-      name={`character-root-${playerId}`} // Unique root group name
+      name={`character-instance-${playerId}`} // Unique root group name
     >
-      <group name={`scene-${playerId}`}>
-        <group name={`character-model-${playerId}`}>
-          {/* <mesh>
-            <boxGeometry args={[0.5, 0.5, 0.5]} />
-            <meshStandardMaterial color="red" />
-          </mesh> */}
-          <primitive object={nodes._rootJoint} />
-
-          <skinnedMesh
-            name={`body-${playerId}`}
-            key={`body-${playerId}`}
-            geometry={(nodes.body as SkinnedMesh).geometry}
-            material={materials.Material}
-            skeleton={(nodes.body as SkinnedMesh).skeleton}
-            castShadow
-            receiveShadow
-          />
-          <skinnedMesh
-            name={`eye-${playerId}`}
-            key={`eye-${playerId}`}
-            geometry={(nodes.eye as SkinnedMesh).geometry}
-            material={materials.Material}
-            skeleton={(nodes.eye as SkinnedMesh).skeleton}
-            castShadow
-            receiveShadow
-          />
-          <skinnedMesh
-            name={`hand-${playerId}`}
-            key={`hand-${playerId}`}
-            geometry={(nodes["hand-"] as SkinnedMesh).geometry} // Consistent key
-            material={materials.Material}
-            skeleton={(nodes["hand-"] as SkinnedMesh).skeleton}
-            castShadow
-            receiveShadow
-          />
-          <skinnedMesh
-            name={`leg-${playerId}`}
-            key={`leg-${playerId}`}
-            geometry={(nodes.leg as SkinnedMesh).geometry}
-            material={materials.Material}
-            skeleton={(nodes.leg as SkinnedMesh).skeleton}
-            castShadow
-            receiveShadow
-          />
-        </group>
-      </group>
+      {/* Use the cloned model instead of recreating mesh structure */}
+      <primitive object={model} />
     </group>
   );
 }
 
+// Preload the model to avoid loading delays
 useGLTF.preload("/models/character.glb");
