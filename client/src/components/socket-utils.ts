@@ -19,14 +19,13 @@ export const socket = io("http://localhost:3001");
 export interface SocketStoreType {
   characters: Character[];
   setCharacters: (characters: Character[]) => void;
-  messages: Chat[];
-  addMessage: (chat: Chat) => void;
+  chats: Chat[];
+  addChat: (chat: Chat) => void;
 }
 
 export const useSocketStore = create<SocketStoreType>()((set) => ({
   characters: [],
   setCharacters: (characters) => set({ characters }),
-  messages: [],
-  addMessage: (message) =>
-    set((state) => ({ messages: [...state.messages, message] })),
+  chats: [],
+  addChat: (chat) => set((state) => ({ chats: [...state.chats, chat] })),
 }));

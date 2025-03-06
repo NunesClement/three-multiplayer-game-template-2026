@@ -9,9 +9,7 @@ export function ChatPanel() {
   const [isFocused, setIsFocused] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const { messages } = useSocketStore();
-
-  console.log(messages);
+  const { chats } = useSocketStore();
 
   function handlePostMessage() {
     socket.emit("chat", {
@@ -39,7 +37,7 @@ export function ChatPanel() {
     };
 
     scrollWithDelay();
-  }, [messages, isFocused]);
+  }, [chats, isFocused]);
   return (
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
       <div
@@ -49,13 +47,13 @@ export function ChatPanel() {
         )}
         ref={chatContainerRef}
       >
-        {messages.map((msg) => (
+        {chats.map((chat) => (
           <motion.div
-            key={msg.id}
+            key={chat.id}
             className={cn(
               `rounded-lg text-white text-sm my-1`,
-              msg.type === "join" && "bg-green-600",
-              msg.type === "left" && "bg-red-600"
+              chat.type === "join" && "bg-green-600",
+              chat.type === "left" && "bg-red-600"
             )}
             initial={{ opacity: 1, display: "block" }}
             animate={
@@ -68,7 +66,7 @@ export function ChatPanel() {
               delay: isFocused ? 0 : 9,
             }}
           >
-            {msg.id} {msg.text}
+            {chat.id} {chat.text}
           </motion.div>
         ))}
       </div>

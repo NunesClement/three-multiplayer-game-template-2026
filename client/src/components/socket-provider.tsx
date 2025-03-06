@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Character, Chat, socket, useSocketStore } from "./socket-utils";
 
 export function SocketManager() {
-  const { setCharacters, addMessage } = useSocketStore();
+  const { setCharacters, addChat } = useSocketStore();
 
   useEffect(() => {
     function onConnect() {
@@ -17,12 +17,12 @@ export function SocketManager() {
     }
 
     function onCharacters(value: Character[]) {
+      console.log({ value });
       setCharacters(value);
     }
 
     function onChat(value: Chat) {
-      console.log({ value });
-      addMessage(value);
+      addChat(value);
     }
 
     socket.on("connect", onConnect);
@@ -38,7 +38,7 @@ export function SocketManager() {
       socket.off("characters", onCharacters);
       socket.off("chat", onChat);
     };
-  }, [addMessage, setCharacters]);
+  }, [addChat, setCharacters]);
 
   return null;
 }
