@@ -22,12 +22,14 @@ export function SocketProvider({ children }: PropsWithChildren) {
     }
 
     function onChat(value: Chat) {
+      console.log({ value });
       setMessages((prev) => [...prev, value]);
     }
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("hello", onHello);
+    socket.off("characters", onCharacters);
     socket.on("chat", onChat);
 
     return () => {

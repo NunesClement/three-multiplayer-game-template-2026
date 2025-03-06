@@ -21,10 +21,6 @@ io.listen(3001);
 
 const characters: Character[] = [];
 
-// const generateRandomPosition = (): [number, number, number] => {
-//   return [Math.random() * 3, 0, Math.random() * 3];
-// };
-
 // const generateRandomHexColor = (): string => {
 //   return (
 //     "#" +
@@ -46,9 +42,6 @@ io.on("connection", (socket) => {
   const newCharacter: Character = {
     id: socket.id,
     position: { x: 0, y: 0, z: 0 },
-    // hairColor: generateRandomHexColor(),
-    // topColor: generateRandomHexColor(),
-    // bottomColor: generateRandomHexColor(),
   };
 
   characters.push(newCharacter);
@@ -65,6 +58,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat", (chat: { message: Chat["text"] }) => {
+    console.log(chat);
+
     io.emit("chat", {
       id: socket.id,
       text: chat.message,
