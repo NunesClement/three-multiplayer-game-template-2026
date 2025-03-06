@@ -148,7 +148,7 @@ export function CharacterController() {
     );
 
     socket.emit("rotation", {
-      rotation: container.current.rotation.y,
+      rotation: character.current?.rotation.y,
     });
 
     if (cameraPosition.current)
@@ -176,8 +176,6 @@ export function CharacterController() {
               animation={animation}
               playerId={socket.id || "myself"}
             />
-            {/* <boxGeometry args={[0.5, 0.5, 0.5]} />
-            <meshStandardMaterial color="red" /> */}
           </mesh>
         </group>
       </group>
