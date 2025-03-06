@@ -163,12 +163,14 @@ export function CharacterController() {
         <group ref={cameraPosition} position-y={4} position-z={-4} />
         <group ref={character}>
           <mesh position-y={0.15}>
-            <Character
+            {/* <Character
               scale={0.18}
               position-y={-0.25}
               animation={animation}
               playerId={socket.id || "myself"}
-            />
+            /> */}
+            <boxGeometry args={[0.5, 0.5, 0.5]} /> {/* Cube de 0.5m de côté */}
+            <meshStandardMaterial color="red" />
           </mesh>
         </group>
       </group>
