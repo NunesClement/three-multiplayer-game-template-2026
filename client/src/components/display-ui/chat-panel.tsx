@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { SendIcon } from "lucide-react";
-import { socket, useSocketStore } from "../socket-utils";
+import { useSocketStore } from "../socket-utils";
 import { cn } from "../../utils/style-utils";
 
 export function ChatPanel() {
@@ -9,7 +9,7 @@ export function ChatPanel() {
   const [isFocused, setIsFocused] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const { chats } = useSocketStore();
+  const { chats, socket } = useSocketStore();
 
   function handlePostMessage() {
     socket.emit("chat", {

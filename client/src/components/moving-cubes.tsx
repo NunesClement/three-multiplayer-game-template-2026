@@ -1,5 +1,5 @@
 import { Character as Character3D } from "./character";
-import { Character, socket, useSocketStore } from "./socket-utils";
+import { Character, useSocketStore } from "./socket-utils";
 import { Vector3 } from "three";
 
 function Cube({ character }: { character: Character }) {
@@ -33,7 +33,7 @@ function Cube({ character }: { character: Character }) {
 }
 
 export const MovingCubes = () => {
-  const { characters, chats } = useSocketStore();
+  const { characters, chats, socket } = useSocketStore();
 
   console.log({ characters, chats });
 

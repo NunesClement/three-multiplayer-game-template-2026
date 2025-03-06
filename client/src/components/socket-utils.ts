@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { create } from "zustand";
 
 export interface Character {
@@ -14,13 +14,11 @@ export interface Chat {
   postedAt: string;
 }
 
-// Export the socket instance
-export const socket = io("http://localhost:3001");
-
 export interface SocketStoreType {
   characters: Character[];
   setCharacters: (characters: Character[]) => void;
   chats: Chat[];
+  socket: Socket;
   addChat: (chat: Chat) => void;
 }
 
@@ -28,5 +26,6 @@ export const useSocketStore = create<SocketStoreType>()((set) => ({
   characters: [],
   setCharacters: (characters) => set({ characters }),
   chats: [],
+  socket: io("http://localhost:3001"),
   addChat: (chat) => set((state) => ({ chats: [...state.chats, chat] })),
 }));

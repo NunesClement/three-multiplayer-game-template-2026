@@ -9,8 +9,8 @@ import { useControls } from "leva";
 import { useRef, useState } from "react";
 import { Group, MathUtils, Vector3 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
-import { socket } from "./socket-utils";
 import { Character } from "./character";
+import { useSocketStore } from "./socket-utils";
 
 const normalizeAngle = (angle: number) => {
   while (angle > Math.PI) angle -= 2 * Math.PI;
@@ -61,6 +61,8 @@ export function CharacterController() {
   const cameraLookAtWorldPosition = useRef(new Vector3());
   const cameraLookAt = useRef(new Vector3());
   const [, get] = useKeyboardControls();
+
+  const { socket } = useSocketStore();
 
   useFrame(({ camera }) => {
     if (rb.current) {

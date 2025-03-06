@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { Character, Chat, socket, useSocketStore } from "./socket-utils";
+import { Character, Chat, useSocketStore } from "./socket-utils";
 
 export function SocketManager() {
-  const { setCharacters, addChat } = useSocketStore();
+  const { setCharacters, addChat, socket } = useSocketStore();
 
   useEffect(() => {
     function onConnect() {
@@ -37,7 +37,8 @@ export function SocketManager() {
       socket.off("characters", onCharacters);
       socket.off("chat", onChat);
     };
-  }, [addChat, setCharacters]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }
