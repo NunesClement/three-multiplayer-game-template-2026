@@ -97,7 +97,7 @@ export function ChatPanel() {
         </motion.button>
       </div>
       <div>debug: {socket.id}</div>
-      <div className="text-xs">
+      <div className="text-xs hidden lg:block">
         position:{" "}
         <div>
           {characters.map((character) => (
