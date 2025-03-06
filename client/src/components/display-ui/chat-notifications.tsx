@@ -21,21 +21,16 @@ export function ChatNotifications() {
   return (
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
       {messages.map((msg) => (
-        <motion.div
+        <div
           key={msg.id}
-          // initial={{ opacity: 0, y: 10 }}
-          // animate={{ opacity: 1, y: 0 }}
-          // exit={{ opacity: 0, y: -10 }}
-          // transition={{ duration: 0.5 }}
           className={cn(
-            `p-2 rounded-lg text-white text-sm ${
-              (msg.type === "join" && "bg-green-600",
-              msg.type === "left" && "bg-red-600")
-            } bg-opacity-70 backdrop-blur-sm`
+            `p-2 rounded-lg text-white text-sm bg-opacity-70 backdrop-blur-sm`,
+            msg.type === "join" && "bg-green-600",
+            msg.type === "left" && "bg-red-600"
           )}
         >
           {msg.text}
-        </motion.div>
+        </div>
       ))}
       <div className="flex gap-2 items-center opacity-35 hover:opacity-100">
         <input
