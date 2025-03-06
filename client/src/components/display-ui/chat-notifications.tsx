@@ -36,7 +36,7 @@ export function ChatNotifications() {
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
       <div
         className={cn(
-          "bg-opacity-70 backdrop-blur-sm p-2 flex flex-col gap-2 overflow-scroll transition-all duration-300",
+          "bg-opacity-70 backdrop-blur-sm flex flex-col gap-2 overflow-scroll transition-all duration-300",
           isFocused ? "max-h-[400px] overflow-y-scroll" : "max-h-[120px]"
         )}
         ref={chatContainerRef}
@@ -45,18 +45,17 @@ export function ChatNotifications() {
           <motion.div
             key={msg.id}
             className={cn(
-              `rounded-lg text-white text-sm `,
+              `rounded-lg text-white text-sm my-1`,
               msg.type === "join" && "bg-green-600",
               msg.type === "left" && "bg-red-600"
             )}
-            initial={{ opacity: 1 }}
+            initial={{ opacity: 1, display: "block" }}
             animate={
               isFocused
-                ? { opacity: 1, visibility: "visible" }
-                : { opacity: 0, visibility: "hidden" }
+                ? { opacity: 1, display: "block" }
+                : { opacity: 0, display: "none" }
             }
-            exit={{ opacity: 0, visibility: "hidden" }}
-            transition={{ duration: 1, delay: 9 }} // Message will fade after 9 seconds
+            transition={{ duration: 1, delay: 3 }} // Message will fade after 9 seconds
           >
             {msg.id} {msg.text}
           </motion.div>
