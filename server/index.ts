@@ -65,7 +65,6 @@ io.on("connection", (socket) => {
 
   socket.on("animation", ({ animation }: { animation: AnimationName }) => {
     const character = characters.find((char) => char.id === socket.id);
-    console.log({ animation });
     if (character) {
       character.animation = animation;
       io.emit("characters", characters);
@@ -73,8 +72,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat", (chat: { message: Chat["text"] }) => {
-    console.log(chat);
-
     io.emit("chat", {
       id: socket.id,
       text: chat.message,

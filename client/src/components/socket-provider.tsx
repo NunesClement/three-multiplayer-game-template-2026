@@ -12,10 +12,6 @@ export function SocketManager() {
       console.log("disconnected");
     }
 
-    function onHello() {
-      console.log("hello");
-    }
-
     function onCharacters(value: Character[]) {
       setCharacters(value);
     }
@@ -26,14 +22,12 @@ export function SocketManager() {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("hello", onHello);
     socket.on("characters", onCharacters);
     socket.on("chat", onChat);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("hello", onHello);
       socket.off("characters", onCharacters);
       socket.off("chat", onChat);
     };
