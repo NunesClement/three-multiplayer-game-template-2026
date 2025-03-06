@@ -96,6 +96,7 @@ export function ChatPanel() {
           <SendIcon />
         </motion.button>
       </div>
+      <div>debug: {socket.id}</div>
     </div>
   );
 }
