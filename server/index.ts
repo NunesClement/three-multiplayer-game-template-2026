@@ -3,9 +3,12 @@ import { Server } from "socket.io";
 interface Character {
   id: string;
   position: { x: number; y: number; z: number };
-  // hairColor: string;
-  // topColor: string;
-  // bottomColor: string;
+}
+
+interface Chat {
+  id: string;
+  text: string;
+  type: "message" | "join" | "left";
 }
 
 const io = new Server({
@@ -34,6 +37,12 @@ const characters: Character[] = [];
 io.on("connection", (socket) => {
   console.log(socket.id, "join the server ⬆");
 
+  io.emit("chat", {
+    id: socket.id,
+    text: `${socket.id} join the server`,
+    type: "message",
+  } satisfies Chat);
+
   const newCharacter: Character = {
     id: socket.id,
     position: { x: 0, y: 0, z: 0 },
@@ -55,8 +64,21 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("chat", (chat: { message: Chat["text"] }) => {
+    io.emit("chat", {
+      id: socket.id,
+      text: chat.message,
+      type: "message",
+    } satisfies Chat);
+  });
+
   socket.on("disconnect", () => {
     console.log(socket.id, "left the server ⬇");
+    io.emit("chat", {
+      id: socket.id,
+      text: `${socket.id} left the server`,
+      type: "message",
+    } satisfies Chat);
 
     const index = characters.findIndex((char) => char.id === socket.id);
     if (index !== -1) {

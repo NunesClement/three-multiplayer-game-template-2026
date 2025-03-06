@@ -103,13 +103,6 @@ export function CharacterController() {
         } else {
           setAnimation("walk");
         }
-
-        // // Emit movement to server
-        // socket.emit("move", {
-        //   x: camera.position.x,
-        //   y: camera.position.y,
-        //   z: camera.position.z,
-        // });
       } else {
         setAnimation("idle");
       }

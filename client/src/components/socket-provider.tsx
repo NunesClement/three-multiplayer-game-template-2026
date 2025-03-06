@@ -1,8 +1,9 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { Character, socket, SocketContext } from "./socket-utils";
+import { Character, Chat, socket, SocketContext } from "./socket-utils";
 
 export function SocketProvider({ children }: PropsWithChildren) {
   const [characters, setCharacters] = useState<Character[]>([]);
+  const [messages, setMessages] = useState<Chat[]>([]);
 
   useEffect(() => {
     function onConnect() {
@@ -20,19 +21,26 @@ export function SocketProvider({ children }: PropsWithChildren) {
       setCharacters(value);
     }
 
+    function onChat(value: Chat) {
+      setMessages((prev) => [...prev, value]);
+    }
+
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("hello", onHello);
+    socket.on("chat", onChat);
+
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
       socket.off("hello", onHello);
       socket.off("characters", onCharacters);
+      socket.off("chat", onChat);
     };
   }, []);
 
   return (
-    <SocketContext.Provider value={{ characters }}>
+    <SocketContext.Provider value={{ characters, messages }}>
       {children}
     </SocketContext.Provider>
   );

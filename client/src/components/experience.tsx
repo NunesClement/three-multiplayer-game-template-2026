@@ -48,8 +48,6 @@ export function Experience() {
     },
   }) as { map: MapName };
 
-  // console.log({ characters, myId: socket.id });
-
   return (
     <>
       <OrbitControls />
@@ -79,14 +77,7 @@ export function Experience() {
         />
 
         <MovingCubes characters={characters} />
-        {/* <Character
-              position={
-                new Vector3(character.position.x, 3, character.position.z)
-              }
-              animation={"idle"}
-              position-y={-0.25}
-              scale={0.18}
-            /> */}
+
         <CharacterController />
       </Physics>
     </>

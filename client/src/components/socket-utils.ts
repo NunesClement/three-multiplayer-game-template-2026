@@ -8,16 +8,25 @@ export interface Character {
   animation: "idle" | "walk" | "run";
 }
 
+export interface Chat {
+  id: string;
+  text: string;
+  type: "message" | "join" | "left";
+}
+
 // Export the socket instance
 export const socket = io("http://localhost:3001");
 export const charactersAtom = atom<Character[]>([]);
+export const chatAtom = atom<Chat[]>([]);
 
 export interface SocketContextType {
   characters: Character[];
+  messages: Chat[];
 }
 
 export const SocketContext = createContext<SocketContextType>({
   characters: [],
+  messages: [],
 });
 
 export const useSocket = () => useContext(SocketContext);

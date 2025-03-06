@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
+import { motion } from "motion/react";
 import { SendIcon } from "lucide-react";
-import { socket } from "../socket-utils";
+import { chatAtom, socket } from "../socket-utils";
+import { useAtom } from "jotai";
+import { cn } from "../../utils/style-utils";
 
 export function ChatNotifications() {
-  const [messages, setMessages] = useState([
-    { id: 1, text: "User1 joined the server", type: "join" },
-    { id: 2, text: "User2 left the server", type: "leave" },
-  ]);
-
   const [currentChat, setCurrentChat] = useState("");
+  const [messages] = useAtom(chatAtom);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMessages((prev) => (prev.length > 0 ? prev.slice(1) : prev));
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, []);
+  console.log(messages);
 
   function handlePostMessage() {
     socket.emit("chat", {
@@ -29,22 +21,23 @@ export function ChatNotifications() {
 
   return (
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
-      <AnimatePresence>
-        {messages.map((msg) => (
-          <motion.div
-            key={msg.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-            className={`p-2 rounded-lg text-white text-sm ${
-              msg.type === "join" ? "bg-green-500" : "bg-red-500"
-            } bg-opacity-70 backdrop-blur-sm`}
-          >
-            {msg.text}
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      {messages.map((msg) => (
+        <motion.div
+          key={msg.id}
+          // initial={{ opacity: 0, y: 10 }}
+          // animate={{ opacity: 1, y: 0 }}
+          // exit={{ opacity: 0, y: -10 }}
+          // transition={{ duration: 0.5 }}
+          className={cn(
+            `p-2 rounded-lg text-white text-sm ${
+              (msg.type === "join" && "bg-green-600",
+              msg.type === "left" && "bg-red-600")
+            } bg-opacity-70 backdrop-blur-sm`
+          )}
+        >
+          {msg.text}
+        </motion.div>
+      ))}
       <div className="flex gap-2 items-center opacity-35 hover:opacity-100">
         <input
           placeholder="Chat..."
