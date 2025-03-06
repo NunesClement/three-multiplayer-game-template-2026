@@ -29,9 +29,17 @@ export function ChatNotifications() {
   }
 
   useEffect(() => {
-    handleScrollToBottom();
-  }, [messages, isFocused]);
+    // Scroll to bottom when messages change or focus state changes
+    const scrollWithDelay = () => {
+      // If collapsing (isFocused === false), wait for the transition to complete
+      const delay = isFocused ? 0 : 310; // Match the transition duration (300ms)
+      setTimeout(() => {
+        handleScrollToBottom();
+      }, delay);
+    };
 
+    scrollWithDelay();
+  }, [messages, isFocused]);
   return (
     <div className="absolute bottom-5 left-5 w-80 p-2 space-y-2">
       <div
