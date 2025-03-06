@@ -7,7 +7,13 @@ function Cube({ character }: { character: Character }) {
   return (
     <mesh
       position-y={0.15}
-      position={new Vector3(character.position.x, 0.25, character.position.z)}
+      position={
+        new Vector3(
+          character.position.x,
+          character.position.y,
+          character.position.z
+        )
+      }
       rotation={[0, character.rotation, 0]} // Add rotation in Y-axis (yaw)
       name="myself-mesh"
     >
