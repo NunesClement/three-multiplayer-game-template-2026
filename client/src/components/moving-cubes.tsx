@@ -25,9 +25,9 @@ function Cube({ character }: { character: Character }) {
 }
 
 export const MovingCubes = () => {
-  const { characters } = useSocketStore();
+  const { characters, chats } = useSocketStore();
 
-  console.log({ characters });
+  console.log({ characters, chats });
 
   return (
     <>

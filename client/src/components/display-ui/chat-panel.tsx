@@ -49,7 +49,7 @@ export function ChatPanel() {
       >
         {chats.map((chat) => (
           <motion.div
-            key={chat.id}
+            key={`${chat.id} ${chat.postedAt.toString()}`}
             className={cn(
               `rounded-lg text-white text-sm my-1`,
               chat.type === "join" && "bg-green-600",

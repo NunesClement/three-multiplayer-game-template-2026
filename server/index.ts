@@ -9,6 +9,7 @@ interface Chat {
   id: string;
   text: string;
   type: "message" | "join" | "left";
+  postedAt: Date;
 }
 
 const io = new Server({
@@ -37,6 +38,7 @@ io.on("connection", (socket) => {
     id: socket.id,
     text: `${socket.id} join the server`,
     type: "message",
+    postedAt: new Date(),
   } satisfies Chat);
 
   const newCharacter: Character = {
@@ -64,6 +66,7 @@ io.on("connection", (socket) => {
       id: socket.id,
       text: chat.message,
       type: "message",
+      postedAt: new Date(),
     } satisfies Chat);
   });
 
@@ -73,6 +76,7 @@ io.on("connection", (socket) => {
       id: socket.id,
       text: `${socket.id} left the server`,
       type: "message",
+      postedAt: new Date(),
     } satisfies Chat);
 
     const index = characters.findIndex((char) => char.id === socket.id);
