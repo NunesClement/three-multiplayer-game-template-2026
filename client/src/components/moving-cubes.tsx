@@ -3,18 +3,6 @@ import { Character, useSocketStore } from "./socket-utils";
 import { Vector3 } from "three";
 
 function Cube({ character }: { character: Character }) {
-  //   const ref = useRef<Mesh>(null);
-  //   console.log({ character });
-  //   useFrame(() => {
-  //     if (ref.current) {
-  //       ref.current.position.set(
-  //         character.position.x,
-  //         0.25,
-  //         character.position.z
-  //       );
-  //     }
-  //   });
-
   return (
     <mesh
       position-y={0.15}
