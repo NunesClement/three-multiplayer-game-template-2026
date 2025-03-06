@@ -31,7 +31,7 @@ export function Character({ animation, playerId, ...props }: CharacterProps) {
     <group ref={group} {...props} dispose={null} name={`main-${playerId}`}>
       <group name={`Scene-${playerId}`}>
         <group name={`fall_guys-${playerId}`}>
-          <primitive object={nodes._rootJoint} />
+          <primitive object={nodes._rootJoint} name={`test4-${playerId}`} />
           <skinnedMesh
             name={`body-${playerId}`} // Unique name for each player
             geometry={(nodes.body as SkinnedMesh).geometry}
