@@ -16,18 +16,17 @@ function Cube({ character }: { character: Character }) {
   //   });
 
   return (
-    <mesh>
-      <mesh
-        position-y={0.15}
-        position={new Vector3(character.position.x, 0.25, character.position.z)}
-      >
-        <Character3D
-          scale={0.18}
-          position-y={-0.25}
-          animation="idle"
-          playerId={character.id || "myself"}
-        />
-      </mesh>
+    <mesh
+      position-y={0.15}
+      position={new Vector3(character.position.x, 0.25, character.position.z)}
+      name="myself-mesh"
+    >
+      <Character3D
+        scale={0.18}
+        position-y={-0.25}
+        animation="idle"
+        playerId={character.id || "myself"}
+      />
     </mesh>
   );
 }
