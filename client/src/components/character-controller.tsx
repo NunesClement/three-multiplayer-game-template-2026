@@ -46,7 +46,7 @@ export function CharacterController() {
         max: degToRad(5),
         step: degToRad(0.1),
       },
-      JUMP_FORCE: { value: 1.5, min: 0.1, max: 4, step: 0.1 },
+      JUMP_FORCE: { value: 5, min: 1, max: 7, step: 0.2 },
     }
   );
   const rb = useRef<RapierRigidBody>(null);
@@ -123,7 +123,10 @@ export function CharacterController() {
         socket.emit("animation", { animation: "idle" });
       }
 
-      if (vel.y === 0 && !isGrounded) {
+      // Ground detection
+      const currentPosition = rb.current.translation();
+      const isNearGround = currentPosition.y <= 0.25; // Adjust based on your capsule height
+      if (vel.y <= 0 && !isGrounded && isNearGround) {
         setIsGrounded(true);
       }
 
