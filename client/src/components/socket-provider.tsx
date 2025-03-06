@@ -1,9 +1,8 @@
-import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { Character, charactersAtom, socket } from "./socket-utils";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { Character, socket, SocketContext } from "./socket-utils";
 
-export function SocketManager() {
-  const [, setCharacters] = useAtom<Character[]>(charactersAtom);
+export function SocketProvider({ children }: PropsWithChildren) {
+  const [characters, setCharacters] = useState<Character[]>([]);
 
   useEffect(() => {
     function onConnect() {
@@ -24,15 +23,17 @@ export function SocketManager() {
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("hello", onHello);
-    socket.on("characters", onCharacters);
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
       socket.off("hello", onHello);
       socket.off("characters", onCharacters);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return null;
+  return (
+    <SocketContext.Provider value={{ characters }}>
+      {children}
+    </SocketContext.Provider>
+  );
 }

@@ -1,7 +1,8 @@
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/experience";
-import { SocketManager } from "./components/socket-manager";
+import { SocketProvider } from "./components/socket-provider";
+import { TestDisplayUIPlayer } from "./components/display-ui/test-display-player";
 
 const keyboardMap = [
   { name: "forward", keys: ["ArrowUp", "KeyW"] },
@@ -14,28 +15,20 @@ const keyboardMap = [
 function App() {
   return (
     <KeyboardControls map={keyboardMap}>
-      <SocketManager />
-      <Canvas
-        shadows
-        camera={{ position: [3, 3, 3], near: 0.1, fov: 40 }}
-        style={{
-          touchAction: "none",
-        }}
-      >
-        <color attach="background" args={["#ececec"]} />
-        <Experience />
-      </Canvas>
+      <SocketProvider>
+        <Canvas
+          shadows
+          camera={{ position: [3, 3, 3], near: 0.1, fov: 40 }}
+          style={{
+            touchAction: "none",
+          }}
+        >
+          <color attach="background" args={["#ececec"]} />
+          <Experience />
+        </Canvas>
 
-      <div
-        style={{
-          position: "absolute",
-          bottom: 3,
-          left: 3,
-          backgroundColor: "white",
-        }}
-      >
-        test
-      </div>
+        <TestDisplayUIPlayer />
+      </SocketProvider>
     </KeyboardControls>
   );
 }
