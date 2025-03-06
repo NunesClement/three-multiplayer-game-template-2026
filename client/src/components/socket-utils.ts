@@ -11,7 +11,7 @@ export interface Chat {
   id: string;
   text: string;
   type: "message" | "join" | "left";
-  postedAt: Date;
+  postedAt: string;
 }
 
 // Export the socket instance

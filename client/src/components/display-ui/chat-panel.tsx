@@ -66,6 +66,11 @@ export function ChatPanel() {
               delay: isFocused ? 0 : 9,
             }}
           >
+            {`${new Date(chat.postedAt)
+              .getHours()
+              .toString()
+              .padStart(2, "0")}:`}
+            {new Date(chat.postedAt).getMinutes().toString().padStart(2, "0")}{" "}
             {chat.id} {chat.text}
           </motion.div>
         ))}
