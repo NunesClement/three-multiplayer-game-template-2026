@@ -26,13 +26,6 @@ httpServer.listen(3003, "0.0.0.0", () => {
   console.log("Socket.io server running on port 3003");
 });
 
-io.on("connection", (socket) => {
-  console.log("Client connected:", socket.id);
-  socket.on("message", (msg) => {
-    console.log("Received:", msg);
-    io.emit("message", msg);
-  });
-});
 // io.listen(3003);
 
 const characters: Character[] = [];
