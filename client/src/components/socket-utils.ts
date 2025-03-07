@@ -15,8 +15,5 @@ export const useSocketStore = create<SocketStoreType>()((set) => ({
   setCharacters: (characters) => set({ characters }),
   chats: [],
   socket: io("https://vps-4838558d.vps.ovh.net"),
-  // socket: io("https://vps-4838558d.vps.ovh.net", {
-  //   transports: ["polling", "websocket", "webtransport"],
-  // }),
   addChat: (chat) => set((state) => ({ chats: [...state.chats, chat] })),
 }));
