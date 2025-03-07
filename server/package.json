@@ -2,7 +2,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --watch index.ts",
-    "start": "bun run index.ts"
+    "start": "bun run index.ts",
+    "d": "bun run index.ts"
   },
   "dependencies": {
     "socket.io": "^4.8.1",
