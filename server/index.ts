@@ -22,7 +22,13 @@ const io = new Server(httpServer, {
   transports: ["websocket", "polling"], // Allow both transports
 });
 
-io.listen(3003);
+httpServer.listen(3003, "0.0.0.0", () => {
+  console.log("Socket.io server running on port 3003");
+});
+
+console.log("TEST");
+
+// io.listen(3003);
 
 const characters: Character[] = [];
 
