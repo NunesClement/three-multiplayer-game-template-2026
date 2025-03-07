@@ -4,6 +4,9 @@ import { AnimationCharacterType, Character, Chat } from "../common-interfaces";
 const io = new Server({
   cors: {
     origin: "http://localhost:5173",
+    // import.meta.env.NODE_ENV === "development"
+    //   ? "http://localhost:5174"
+    //   : "http://localhost:5174",
   },
 });
 
@@ -56,7 +59,6 @@ io.on("connection", (socket) => {
       character.rotation = rotation;
       io.emit("characters", characters);
     }
-    console.log({ rotation });
   });
 
   socket.on(

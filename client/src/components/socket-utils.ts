@@ -14,6 +14,10 @@ export const useSocketStore = create<SocketStoreType>()((set) => ({
   characters: [],
   setCharacters: (characters) => set({ characters }),
   chats: [],
-  socket: io("http://localhost:3001"),
+  socket: io(
+    import.meta.env.NODE_ENV === "development"
+      ? "http://localhost:3001"
+      : "http://localhost:3001"
+  ),
   addChat: (chat) => set((state) => ({ chats: [...state.chats, chat] })),
 }));
