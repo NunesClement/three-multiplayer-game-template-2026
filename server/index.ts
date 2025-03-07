@@ -4,7 +4,7 @@ import { createServer } from "http";
 
 const io = new Server({
   cors: {
-    origin: "a-game-test.vercel.app",
+    origin: "https://a-game-test.vercel.app",
     // import.meta.env.NODE_ENV === "development"
     //   ? "http://localhost:5173"
     //   : "http://localhost:5173",
