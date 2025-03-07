@@ -1,14 +1,25 @@
 import { Server } from "socket.io";
 import { AnimationCharacterType, Character, Chat } from "../common-interfaces";
+import { createServer } from "http";
 
-const io = new Server({
+// const io = new Server({
+//   cors: {
+//     origin: "*",
+//     //https://a-game-test.vercel.app
+//     // import.meta.env.NODE_ENV === "development"
+//     //   ? "http://localhost:5173"
+//     //   : "http://localhost:5173",
+//   },
+// });
+
+const httpServer = createServer();
+
+const io = new Server(httpServer, {
   cors: {
-    origin: "*",
-    //https://a-game-test.vercel.app
-    // import.meta.env.NODE_ENV === "development"
-    //   ? "http://localhost:5173"
-    //   : "http://localhost:5173",
+    origin: "*", // Allow requests from anywhere (adjust as needed)
+    methods: ["GET", "POST"],
   },
+  transports: ["websocket", "polling"], // Allow both transports
 });
 
 io.listen(3003);
