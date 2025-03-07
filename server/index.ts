@@ -1,14 +1,31 @@
 import { Server } from "socket.io";
 import { AnimationCharacterType, Character, Chat } from "../common-interfaces";
+import { createServer } from "http";
 
 const io = new Server({
   cors: {
     origin: "*",
+    //https://a-game-test.vercel.app
     // import.meta.env.NODE_ENV === "development"
     //   ? "http://localhost:5173"
     //   : "http://localhost:5173",
   },
 });
+
+io.listen(3003);
+
+// const httpServer = createServer();
+
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: "https://a-game-test.vercel.app/",
+//   },
+//   transports: ["websocket", "polling", "webtransport"], // Allow both transports
+// });
+
+// httpServer.listen(3003, "0.0.0.0", () => {
+//   console.log("Socket.io server running on port 3003");
+// });
 
 const characters: Character[] = [];
 
