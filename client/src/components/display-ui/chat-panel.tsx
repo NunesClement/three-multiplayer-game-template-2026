@@ -109,7 +109,7 @@ export function ChatPanel() {
           </div>
         ))}
       </div>
-      <p>env: {import.meta.env.NODE_ENV}</p>
+      <p>env: {import.meta.env.PROD}</p>
     </div>
   );
 }
