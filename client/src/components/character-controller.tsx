@@ -67,6 +67,8 @@ export function CharacterController() {
 
   const { socket } = useSocketStore();
 
+  console.log({ socket });
+
   useFrame(({ camera }) => {
     if (rb.current) {
       const vel = rb.current.linvel();
