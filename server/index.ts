@@ -3,10 +3,10 @@ import { AnimationCharacterType, Character, Chat } from "../common-interfaces";
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://a-game-test.vercel.app",
     // import.meta.env.NODE_ENV === "development"
-    //   ? "http://localhost:5174"
-    //   : "http://localhost:5174",
+    //   ? "http://localhost:5173"
+    //   : "http://localhost:5173",
   },
 });
 
