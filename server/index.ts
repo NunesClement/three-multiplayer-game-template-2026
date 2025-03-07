@@ -19,7 +19,7 @@ const io = new Server(httpServer, {
     origin: "*", // Allow requests from anywhere (adjust as needed)
     methods: ["GET", "POST"],
   },
-  transports: ["websocket", "polling"], // Allow both transports
+  transports: ["websocket", "polling", "webtransport"], // Allow both transports
 });
 
 httpServer.listen(3003, "0.0.0.0", () => {
