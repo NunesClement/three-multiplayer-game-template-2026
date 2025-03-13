@@ -3,7 +3,7 @@ import { useSocketStore } from "./socket-utils";
 import { Vector3 } from "three";
 import { Character } from "../../../common-interfaces";
 
-function Cube({ character }: { character: Character }) {
+function Player({ character }: { character: Character }) {
   return (
     <mesh
       position={
@@ -26,14 +26,14 @@ function Cube({ character }: { character: Character }) {
   );
 }
 
-export const MovingCubes = () => {
+export const MovingPlayers = () => {
   const { characters, socket } = useSocketStore();
 
   return (
     <>
       {characters.map((character) =>
         character.id !== socket.id ? (
-          <Cube key={character.id} character={character} />
+          <Player key={character.id} character={character} />
         ) : null
       )}
     </>

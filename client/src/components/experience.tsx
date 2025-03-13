@@ -8,7 +8,7 @@ import { useControls } from "leva";
 import { CharacterController } from "./character-controller";
 import { useRef } from "react";
 import { Map } from "./map";
-import { MovingCubes } from "./moving-cubes";
+import { MovingPlayers } from "./moving-players";
 
 type MapName = keyof typeof maps;
 
@@ -73,7 +73,7 @@ export function Experience() {
           model={`models/${map}.glb`}
         />
 
-        <MovingCubes />
+        <MovingPlayers />
 
         <CharacterController />
       </Physics>
