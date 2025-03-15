@@ -66,10 +66,23 @@ export function CharacterController() {
   const [, get] = useKeyboardControls();
 
   const { socket } = useSocketStore();
-
-  console.log({ socket });
+  let lastRotation: number = 0; // Store the last emitted rotation
 
   useFrame(({ camera }) => {
+    const ROTATION_THRESHOLD = 0.05; // Adjust threshold as needed
+
+    function updateRotation() {
+      const currentRotation = character.current?.rotation.y ?? 0;
+
+      if (
+        lastRotation === null ||
+        Math.abs(currentRotation - lastRotation) > ROTATION_THRESHOLD
+      ) {
+        socket.emit("rotation", { rotation: currentRotation });
+        lastRotation = currentRotation; // Update last emitted value
+      }
+    }
+
     if (rb.current) {
       const vel = rb.current.linvel();
 
@@ -164,9 +177,7 @@ export function CharacterController() {
       0.1
     );
 
-    socket.emit("rotation", {
-      rotation: character.current?.rotation.y,
-    });
+    updateRotation();
 
     if (cameraPosition.current)
       cameraPosition.current.getWorldPosition(cameraWorldPosition.current);
