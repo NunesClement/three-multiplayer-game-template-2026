@@ -98,7 +98,7 @@ export function ChatPanel() {
       </div>
       <div>debug: {socket.id}</div>
       <div className="text-xs hidden lg:block">
-        position:{" "}
+        position-:{" "}
         {characters.map((character) => (
           <div className="flex gap-2">
             <p>{`x: ${Math.round(character.position.x)} y: ${Math.round(
