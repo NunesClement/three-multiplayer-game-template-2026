@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "socket.io": "^4.8.1",
-    "vite": "7.2.6"
+    "vite": "7.2.7"
   }
 }
