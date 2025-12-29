@@ -6,7 +6,7 @@
     "d": "bun run index.ts"
   },
   "dependencies": {
-    "socket.io": "^4.8.1",
-    "vite": "7.2.7"
+    "socket.io": "^4.8.3",
+    "vite": "7.3.0"
   }
 }
