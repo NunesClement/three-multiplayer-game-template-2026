@@ -1,4 +1,4 @@
-## 🚀 Fully Functional 3D Multiplayer Game
+## 🧩 Fully Functional 3D Multiplayer Game
 
 A **complete, production-ready game architecture** combining a modern frontend with a real-time backend. Built for performance, responsiveness, and smooth multiplayer interaction.
 
