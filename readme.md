@@ -1,4 +1,4 @@
-## 🧩 Fully Functional 3D Multiplayer Game - host in on a VPS
+## 🧩 Fully Functional 3D Multiplayer Game Template with React/Three - ready to be hosted on VPS
 
 A **complete, production-ready game architecture** combining a modern frontend with a real-time backend. Built for performance, responsiveness, and smooth multiplayer interaction.
 
