@@ -4,7 +4,7 @@ import { createServer } from "http";
 
 const io = new Server({
   cors: {
-    origin: "https://a-game-test.vercel.app",
+    origin: "https://three-multiplayer-game-template.vercel.app",
     // import.meta.env.NODE_ENV === "development"
     //   ? "http://localhost:5173"
     //   : "http://localhost:5173",
@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
         character.animation = animation;
         io.emit("characters", characters);
       }
-    }
+    },
   );
 
   socket.on("chat", (chat: { message: Chat["text"] }) => {
