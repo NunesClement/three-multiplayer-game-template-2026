@@ -9,25 +9,25 @@ A **complete, production-ready game architecture** combining a modern frontend w
 
 ### ✨ Features
 
-* 🎮 **Fully functional game**
-* ⚡ **Modern client stack**
+- 🎮 **Fully functional game**
+- ⚡ **Modern client stack**
+  - **Vite 8.x** for ultra-fast development
+  - **React Three Fiber** for powerful 3D rendering with React
+  - **Zustand** for lightweight and scalable state management
 
-  * **Vite 8.0.0** for ultra-fast development
-  * **React Three Fiber** for powerful 3D rendering with React
-  * **Zustand** for lightweight and scalable state management
-* 🌐 **Real-time multiplayer server**
+- 🌐 **Real-time multiplayer server**
+  - **WebSocket-based backend** for low-latency communication
 
-  * **WebSocket-based backend** for low-latency communication
-* 🧩 **Clean architecture**
+- 🧩 **Clean architecture**
+  - Clear separation between **client** and **server**
 
-  * Clear separation between **client** and **server**
-* 🔄 **Updated version inspired by Wawa Sensei**
+- 🔄 **Updated version inspired by Wawa Sensei**
 
 ### 🛠 Tech Stack
 
 | Layer            | Technology        |
 | ---------------- | ----------------- |
-| Client           | Vite 8.0.0        |
+| Client           | Vite 8.x          |
 | Rendering        | React Three Fiber |
 | State Management | Zustand           |
 | Server           | WebSocket         |
